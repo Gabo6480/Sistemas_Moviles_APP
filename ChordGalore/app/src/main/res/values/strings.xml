@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">ChordGalore</string>
-    <string name="open_drawer">Open Menu</string>
-    <string name="close_drawer">Close Menu</string>
+    <string name="open_drawer">Open navigation menu</string>
+    <string name="close_drawer">Close navigation menu</string>
 </resources>
