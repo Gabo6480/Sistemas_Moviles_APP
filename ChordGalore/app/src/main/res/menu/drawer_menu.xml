@@ -11,11 +11,11 @@
             android:icon="@drawable/ic_person"
             android:title="Perfil" />
         <item
-            android:id="@+id/nav_favorites"
+            android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_star"
             android:title="Favoritos" />
         <item
-            android:id="@+id/nav_downloads"
+            android:id="@+id/nav_download"
             android:icon="@drawable/ic_file_download"
             android:title="Descargas" />
         <item
