@@ -12,43 +12,18 @@
         android:layout_height="match_parent">
 
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="4dp">
 
 
-            <include layout="@layout/custom_toolbar" />
 
-            <!--com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+        <include layout="@layout/custom_toolbar" />
 
-                app:tabMode="auto">
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Tab1" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Tab2" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Tab3" />
-            </com.google.android.material.tabs.TabLayout-->
-        </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"

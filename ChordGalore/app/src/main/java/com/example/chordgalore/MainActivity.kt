@@ -1,14 +1,14 @@
 package com.example.chordgalore
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.core.view.marginLeft
+import com.example.chordgalore.ui.login.LoginActivity
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu,menu)
 
-        var searchItem = menu?.findItem(R.id.toolbar_search)
+        val searchItem = menu?.findItem(R.id.toolbar_search)
 
         //Aquí manejamos lo que va a pasar cuando se abra/cerre el menú de busqueda
         searchItem?.setOnActionExpandListener(object: MenuItem.OnActionExpandListener{
@@ -57,10 +57,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         })
 
-        var searchView : SearchView = searchItem?.actionView as SearchView
-        searchView?.queryHint = "Busqueda..."
-        searchView?.isIconified = false
-        searchView?.setOnCloseListener {
+        val searchView : SearchView = searchItem?.actionView as SearchView
+        searchView.queryHint = "Busqueda..."
+        searchView.isIconified = false
+        searchView.setOnCloseListener {
             searchView.setQuery("", false)
             true
         }
@@ -92,6 +92,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_download -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container,DownloadFragment()).addToBackStack("Download").commit()
 
             R.id.nav_config -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container,ConfigurationFragment()).addToBackStack("Configuration").commit()
+
+            R.id.nav_algo -> startActivity(Intent(this, LoginActivity::class.java))
 
         }
 

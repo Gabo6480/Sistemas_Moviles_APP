@@ -27,8 +27,9 @@
     <item android:title="Comunicar">
         <menu>
             <item
+                android:id="@+id/nav_algo"
                 android:icon="@drawable/ic_person"
-                android:title="Algo" />
+                android:title="Login" />
             <item
                 android:icon="@drawable/ic_person"
                 android:title="Algo" />
