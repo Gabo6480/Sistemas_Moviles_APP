@@ -1,12 +1,16 @@
 package com.example.chordgalore.ui.login
 
 import android.app.Activity
+import android.graphics.Color
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextWatcher
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -27,22 +31,27 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Declaramos el contenido de esta actividad
         setContentView(R.layout.activity_login)
 
+        //Indicamos que vamos a usar una toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true); //Activamos la flechita de regreso
 
-        val login = findViewById<Button>(R.id.login)
-        val loading = findViewById<ProgressBar>(R.id.loading)
+        //Esta funcion crea toda la logica de la validación
+        formLogic()
+    }
 
+    private fun formLogic() {
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
+        //Esto revisa la validez de ambos campos del login
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
-            // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            // desactivar el boton de login a menos que ambos campos dean validos
+            login_button.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
                 login_edit_mail.error = getString(loginState.usernameError)
@@ -52,10 +61,12 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        //Una vez que se haya completado de procesar el resultado del login
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
+            //Desactivamos el icono de login
+            login_loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
@@ -94,8 +105,10 @@ class LoginActivity : AppCompatActivity() {
                 false
             }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
+            //Creamos el evento onClick del botón
+            login_button.setOnClickListener {
+                //Activamos la visibilidad de el icono de login
+                login_loading.visibility = View.VISIBLE
                 loginViewModel.login(
                     login_edit_mail.editText?.text.toString(),
                     login_edit_pass.editText?.text.toString()

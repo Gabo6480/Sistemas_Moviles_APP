@@ -9,7 +9,7 @@
             <gradient
                 android:endX="100"
                 android:endY="0"
-                android:startX="10"
+                android:startX="2"
                 android:startY="0">
                 <item
                     android:color= "@color/colorSecondary"

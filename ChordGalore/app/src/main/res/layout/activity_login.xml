@@ -10,23 +10,42 @@
     <include layout="@layout/custom_toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/activity_horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+
+        <TextView
+            android:id="@+id/login_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="85dp"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="80dp"
+            android:text="Bienvenido"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/login_edit_mail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="114dp"
-            android:layout_marginLeft="114dp"
-            android:layout_marginTop="39dp"
+            android:layout_marginStart="85dp"
+            android:layout_marginLeft="85dp"
 
+            android:layout_marginTop="40dp"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/login_title">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -42,8 +61,8 @@
             android:id="@+id/login_edit_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="114dp"
-            android:layout_marginLeft="114dp"
+            android:layout_marginStart="85dp"
+            android:layout_marginLeft="85dp"
             android:layout_marginTop="24dp"
 
             app:errorEnabled="true"
@@ -65,24 +84,24 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
+            android:id="@+id/login_button"
+            android:layout_width="163dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginStart="85dp"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rounded_button"
             android:enabled="false"
             android:text="@string/action_sign_in"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/colorBackground"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_edit_pass"
-            app:layout_constraintVertical_bias="0.2" />
+            app:layout_constraintTop_toBottomOf="@+id/login_edit_pass" />
 
         <ProgressBar
-            android:id="@+id/loading"
+            android:id="@+id/login_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -96,5 +115,6 @@
             app:layout_constraintStart_toStartOf="@+id/login_edit_pass"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
