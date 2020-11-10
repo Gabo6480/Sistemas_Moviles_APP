@@ -7,10 +7,6 @@
             android:icon="@drawable/ic_home"
             android:title="Inicio" />
         <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_person"
-            android:title="Perfil" />
-        <item
             android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_star"
             android:title="Favoritos" />
@@ -18,21 +14,22 @@
             android:id="@+id/nav_download"
             android:icon="@drawable/ic_file_download"
             android:title="Descargas" />
-        <item
-            android:id="@+id/nav_config"
-            android:icon="@drawable/ic_settings"
-            android:title="Configuración" />
     </group>
 
-    <item android:title="Comunicar">
+    <item android:title="Cuenta">
         <menu>
             <item
-                android:id="@+id/nav_algo"
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_person"
+                android:title="Perfil" />
+            <item
+                android:id="@+id/nav_login"
                 android:icon="@drawable/ic_person"
                 android:title="Login" />
-            <item
-                android:icon="@drawable/ic_person"
-                android:title="Algo" />
         </menu>
     </item>
+    <item
+        android:id="@+id/nav_config"
+        android:icon="@drawable/ic_settings"
+        android:title="Configuración" />
 </menu>
