@@ -1,5 +1,6 @@
 package com.example.chordgalore
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -67,11 +68,9 @@ class ListFragment(query : Int) : Fragment() {
         adapter.setOnItemClickListener(object : ContentRecyclerAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 val item = listItems[position]
-                Toast.makeText(
-                    context,
-                    "${item._title} cliqueado",
-                    Toast.LENGTH_LONG
-                ).show()
+                val intent = Intent(context, SongActivity::class.java)
+                intent.putExtra("SongID", item._id)
+                startActivity(intent)
             }
         })
 
@@ -94,19 +93,19 @@ class ListFragment(query : Int) : Fragment() {
     }
 
     private fun loadMoreItems(){
-        changeCounter++
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Macarena $changeCounter", "Pepe"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Algo $changeCounter", "Toño"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "E $changeCounter", "Marquiplier"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Otro $changeCounter", "Asu"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Lorem $changeCounter", "Ipsum"))
+        listItemsFull.add(TileEntity(1 + changeCounter, R.drawable.user_image, "Macarena $changeCounter", "Pepe"))
+        listItemsFull.add(TileEntity(2 + changeCounter,R.drawable.user_image, "Algo $changeCounter", "Toño"))
+        listItemsFull.add(TileEntity(3 + changeCounter,R.drawable.user_image, "E $changeCounter", "Marquiplier"))
+        listItemsFull.add(TileEntity(4 + changeCounter,R.drawable.user_image, "Otro $changeCounter", "Asu"))
+        listItemsFull.add(TileEntity(5 + changeCounter,R.drawable.user_image, "Lorem $changeCounter", "Ipsum"))
         listItemsFull.add(
-            TileEntity(
+            TileEntity(6 + changeCounter,
                 R.drawable.user_image,
                 "Titulototototote $changeCounter",
                 "AAAAAAAAAAAAAAAAAAAAAAAAA"
             )
         )
+        changeCounter++
 
         //Esto pospone el llamado del update por 1 frame para evitar errores
         Handler(Looper.getMainLooper()).postDelayed({
@@ -128,31 +127,8 @@ class ListFragment(query : Int) : Fragment() {
     }
 
     private fun getArrayItems(){
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Macarena $changeCounter", "Pepe"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Algo $changeCounter", "Toño"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "E $changeCounter", "Marquiplier"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Otro $changeCounter", "Asu"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Lorem $changeCounter", "Ipsum"))
-        listItemsFull.add(
-            TileEntity(
-                R.drawable.user_image,
-                "Titulototototote $changeCounter",
-                "AAAAAAAAAAAAAAAAAAAAAAAAA"
-            )
-        )
-        changeCounter++
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Macarena $changeCounter", "Pepe"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Algo $changeCounter", "Toño"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "E $changeCounter", "Marquiplier"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Otro $changeCounter", "Asu"))
-        listItemsFull.add(TileEntity(R.drawable.user_image, "Lorem $changeCounter", "Ipsum"))
-        listItemsFull.add(
-            TileEntity(
-                R.drawable.user_image,
-                "Titulototototote $changeCounter",
-                "AAAAAAAAAAAAAAAAAAAAAAAAA"
-            )
-        )
+        loadMoreItems()
+        loadMoreItems()
 
         lastItemIndex = listItemsFull.lastIndex
     }
