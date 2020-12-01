@@ -107,10 +107,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ListFragment(0)).addToBackStack("Home").commit()
 
-            R.id.nav_favorite -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(1)).addToBackStack("Favorite")
-                .commit()
-
             R.id.nav_download -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ListFragment(2)).addToBackStack("Download")
                 .commit()
@@ -121,11 +117,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.LENGTH_LONG
             ).show() //TODO: Implementar Actividad del Perfil
 
-            R.id.nav_config -> Toast.makeText(
-                applicationContext,
-                "Config cliqueado",
-                Toast.LENGTH_LONG
-            ).show() //TODO: Implementar Actividad de Configuración
+            R.id.nav_config -> startActivity(Intent(this, SettingsActivity::class.java))
 
             R.id.nav_login -> startActivity(Intent(this, LoginActivity::class.java))
 
