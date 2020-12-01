@@ -107,6 +107,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ListFragment(0)).addToBackStack("Home").commit()
 
+            R.id.nav_favorite -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ListFragment(1)).addToBackStack("Favorite")
+                .commit()
+
             R.id.nav_download -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ListFragment(2)).addToBackStack("Download")
                 .commit()
