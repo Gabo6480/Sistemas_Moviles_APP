@@ -121,11 +121,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Toast.LENGTH_LONG
             ).show() //TODO: Implementar Actividad del Perfil
 
-            R.id.nav_config -> Toast.makeText(
-                applicationContext,
-                "Config cliqueado",
-                Toast.LENGTH_LONG
-            ).show() //TODO: Implementar Actividad de Configuración
+            R.id.nav_config -> startActivity(Intent(this, SettingsActivity::class.java))
 
             R.id.nav_login -> startActivity(Intent(this, LoginActivity::class.java))
 
