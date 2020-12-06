@@ -13,5 +13,8 @@ class ProfileActivity : AppCompatActivity() {
         //Indicamos que vamos a usar una toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true); //Activamos la flechita de regreso
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ListFragment(0)).commit()
     }
 }
