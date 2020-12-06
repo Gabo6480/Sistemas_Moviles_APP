@@ -15,6 +15,8 @@
     <string name="login_failed">"El inicio de sesión ha fallado"</string>
     <string name="title_activity_settings">Configuración</string>
     <string name="title_activity_profile">Perfil</string>
+    <string name="title_activity_new_song">Nueva Cancion</string>
+
 
 
     <!-- Preference Titles -->

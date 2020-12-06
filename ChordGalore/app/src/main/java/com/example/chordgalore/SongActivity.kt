@@ -3,6 +3,7 @@ package com.example.chordgalore
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_song.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class SongActivity : AppCompatActivity() {
@@ -26,7 +27,6 @@ class SongActivity : AppCompatActivity() {
             ).show()
         }
 
-        val imageContainer = findViewById<LinearLayout>(R.id.image_container)
 
         repeat(3) {
             val newImage = ImageView(this)
@@ -35,7 +35,7 @@ class SongActivity : AppCompatActivity() {
             newImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
             newImage.adjustViewBounds = true
             newImage.setPadding(0,0,16,0)
-            imageContainer.addView(newImage)
+            image_container.addView(newImage)
         }
 
         val textoConatiner = findViewById<TextView>(R.id.TextoCancion)
