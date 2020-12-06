@@ -57,11 +57,9 @@ class NewSongActivity : AppCompatActivity() {
                     _currentImages.add(createImageViewFromBitmap(_currentBitmap.last()));
                 }
             } else {
-                if(data.data != null) {
-                    val uri: Uri? = data.data
-                    // your codefor single image selection
-                    uri?.let { _currentBitmap.add(loadBitmapFromUri(it)) }?.let { _currentImages.add(createImageViewFromBitmap(_currentBitmap.last())) };
-                }
+                val uri: Uri? = data.data
+                // your codefor single image selection
+                uri?.let { _currentBitmap.add(loadBitmapFromUri(it)) }?.let { _currentImages.add(createImageViewFromBitmap(_currentBitmap.last())) };
             }
         }
     }

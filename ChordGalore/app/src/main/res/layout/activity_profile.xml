@@ -18,32 +18,63 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="153dp"
             android:layout_margin="8dp"
             android:padding="3dp"
             android:gravity="center"
-            android:background="@color/colorSecondary">
+            android:background="@color/colorSecondary"
+            android:id="@+id/profile_area">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:cardCornerRadius="75dp"
+                    app:cardElevation="0dp"
+                    app:cardPreventCornerOverlap="false"
+                    android:id="@+id/image_card">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:cardCornerRadius="75dp"
-            app:cardElevation="1dp"
-            app:cardPreventCornerOverlap="false">
+                    <ImageView
+                        android:id="@+id/tile_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/user" />
+                </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/tile_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/user" />
-        </androidx.cardview.widget.CardView>
+                <ImageButton
+                    android:id="@+id/buttonLoadPP"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_add_a_photo"
+                    android:layout_gravity="center"
+                    android:layout_alignBottom="@id/image_card"
+                    android:layout_alignRight="@id/image_card"
+                    android:layout_alignEnd="@id/image_card" />
+            </RelativeLayout>
 
         </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/buttonLoadPortada"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_add_a_photo"
+                android:layout_gravity="center"
+                android:layout_alignTop="@id/profile_area"
+                android:layout_alignRight="@id/profile_area"
+                android:layout_alignEnd="@id/profile_area" />
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
