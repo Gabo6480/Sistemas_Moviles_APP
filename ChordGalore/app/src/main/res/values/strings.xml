@@ -6,13 +6,16 @@
     <string name="title_activity_login">Iniciar Sesión</string>
     <string name="prompt_email">Correo</string>
     <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Registrarse</string>
     <string name="action_sign_in_short">Ingresar</string>
     <string name="welcome">"¡Bienvenido!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"El inicio de sesión ha fallado"</string>
     <string name="title_activity_settings">Configuración</string>
+    <string name="title_activity_profile">Perfil</string>
+
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -28,4 +31,5 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>

@@ -115,11 +115,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .replace(R.id.fragment_container, ListFragment(2)).addToBackStack("Download")
                 .commit()
 
-            R.id.nav_profile -> Toast.makeText(
-                applicationContext,
-                "Perfil cliqueado",
-                Toast.LENGTH_LONG
-            ).show() //TODO: Implementar Actividad del Perfil
+            R.id.nav_profile -> startActivity(Intent(this, ProfileActivity::class.java))
 
             R.id.nav_config -> startActivity(Intent(this, SettingsActivity::class.java))
 
