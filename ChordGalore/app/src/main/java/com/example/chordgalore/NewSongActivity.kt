@@ -7,15 +7,23 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chordgalore.data.LoginRepository
+import com.example.chordgalore.data.SaveSharedPreference
+import com.example.chordgalore.data.model.Categoria
+import com.example.chordgalore.data.service.APIService
 import kotlinx.android.synthetic.main.activity_new_song.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 
 
 class NewSongActivity : AppCompatActivity() {
     val RESULT_LOAD_IMAGE  = 1
+    val arrayList = ArrayList<Categoria>()
+    var added = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_song)
@@ -29,6 +37,78 @@ class NewSongActivity : AppCompatActivity() {
             getIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             getIntent.type = "image/*"
             startActivityForResult(getIntent, RESULT_LOAD_IMAGE);
+        }
+
+        APIService.traerCategoria{cates, _ ->
+            cates?.forEach {
+                arrayList.add(it)
+            }
+
+            newSongGenreSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayList)
+        }
+
+        newSongPublicarBtn.setOnClickListener {
+            val titulo = newSongTitleEdit.text.toString()
+            var genero : Int = 0
+            arrayList.forEach {
+                if(it.nombre == newSongGenreSpinner.selectedItem.toString())
+                    genero = it.id
+            }
+            val contenido = newSongContentEdit.text.toString()
+
+
+            if(titulo.isNotEmpty() && genero != 0 && contenido.isNotEmpty() && _currentBitmap.size > 0) {
+                var problem = true
+                LoginRepository.instance()?.user?.userId?.let { it1 ->
+                    APIService.agregaPost(
+                        titulo, genero, contenido, "Publicado",
+                        it1
+                    ) { pub, _ ->
+                        _currentBitmap.forEach {
+                            if (pub != null) {
+                                APIService.agregaFoto(
+                                    SaveSharedPreference.bitmapToBase64(it),
+                                    pub.id
+                                ) { b, _ ->
+                                    if (!b!!) {
+                                        Toast.makeText(
+                                            applicationContext,
+                                            "Hubo un problema al subir la imagen",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        problem = false
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "No se pudo localizar la publicación",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                problem = false
+                            }
+                        }
+                    }
+                }
+                added = problem
+
+                if(added){
+                    Toast.makeText(
+                        applicationContext,
+                        "Publicacion creada exitosamente",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    finish()
+                }
+            }
+            else
+                Toast.makeText(
+                    applicationContext,
+                    "No se puede publicar hasta que todos los campos tengan un valor",
+                    Toast.LENGTH_LONG
+                ).show()
+
+
         }
     }
 
@@ -62,6 +142,49 @@ class NewSongActivity : AppCompatActivity() {
                 uri?.let { _currentBitmap.add(loadBitmapFromUri(it)) }?.let { _currentImages.add(createImageViewFromBitmap(_currentBitmap.last())) };
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if(!added) {
+            val titulo = newSongTitleEdit.text.toString()
+            var genero: Int = 0
+            arrayList.forEach {
+                if (it.nombre == newSongGenreSpinner.selectedItem)
+                    genero = it.id
+            }
+            val contenido = newSongContentEdit.text.toString()
+
+            LoginRepository.instance()?.user?.userId?.let { it1 ->
+                APIService.agregaPost(
+                    titulo, genero, contenido, "Borrador",
+                    it1
+                ) { pub, _ ->
+                    _currentBitmap.forEach {
+                        if (pub != null) {
+                            APIService.agregaFoto(
+                                SaveSharedPreference.bitmapToBase64(it),
+                                pub.id
+                            ) { b, _ ->
+                                if (!b!!)
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Hubo un problema al subir la imagen",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                            }
+                        }
+                    }
+                }
+            }
+
+            Toast.makeText(
+                applicationContext,
+                "Publicacion guardada como borrador",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
+        super.onBackPressed()
     }
 
     private fun createImageViewFromBitmap(bitmap: Bitmap): ImageView {

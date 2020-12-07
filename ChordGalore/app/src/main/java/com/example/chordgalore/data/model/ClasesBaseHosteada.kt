@@ -45,8 +45,8 @@ data class Usuarios(
 }
 data class Fotos(
     val id: Int,
-    val idPubli: Int,
-    val contenido: String,
+    val idPublicacion: Int,
+    val imagen: String,
     val activo: Boolean
 )
 {
@@ -65,5 +65,9 @@ data class Favoritos(
 data class Categoria(
     val id: Int,
     val nombre: String
-)
+){
+    override fun toString(): String {
+        return nombre
+    }
+}
 
