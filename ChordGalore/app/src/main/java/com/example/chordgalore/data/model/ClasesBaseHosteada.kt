@@ -7,14 +7,16 @@ data class Publicacion(
     val imagen: String,
     val id: Int,
     val genero: Int,
+    val generoN: String,
     val texto: String,
     val estado: String,
     val idUser: Int,
+    val nombre: String,
     val activo: Int
 )
 {
-    constructor(estado: String,idUser: Int,activo: Int):this("","",-1,-1,"",estado,idUser,activo)
-    constructor(idUser: Int,imagen: String,activo: Int):this("",imagen,-1,-1,"","",idUser,activo)
+    constructor(estado: String,idUser: Int,activo: Int):this("","",-1,-1,"","",estado,idUser,"",activo)
+    constructor(idUser: Int,imagen: String,activo: Int):this("",imagen,-1,-1,"","","",idUser,"",activo)
 }
 data class Usuarios(
     val id: Int,
