@@ -10,6 +10,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.ui.login.LoginActivity
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +23,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        LoginRepository.instance()?.context = applicationContext
+
+        if(!LoginRepository.instance()?.isLoggedIn!!) {
+            LoginRepository.instance()?.autoLogin()
+            if (LoginRepository.instance()?.isLoggedIn!!) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
 
         //Le decimos que utilice el toolbar que creamos
         setSupportActionBar(toolbar)

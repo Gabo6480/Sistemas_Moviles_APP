@@ -1,5 +1,8 @@
 package com.example.chordgalore.data
 
+import android.content.Context
+import android.graphics.BitmapFactory
+import com.example.chordgalore.R
 import com.example.chordgalore.data.model.LoggedInUser
 import java.io.IOException
 
@@ -17,6 +20,8 @@ class LoginRepository private constructor() {
         }
     }
 
+    lateinit var context : Context
+
     // in-memory cache of the loggedInUser object
     var user: LoggedInUser? = null
         private set
@@ -30,8 +35,14 @@ class LoginRepository private constructor() {
         user = null
     }
 
+    fun autoLogin(){
+        if(user == null)
+            user = SaveSharedPreference.getUserData(context)
+    }
+
     fun logout() {
         user = null
+        SaveSharedPreference.clearUserName(context)
     }
 
     fun login(username: String, password: String): Result<LoggedInUser> {
@@ -47,14 +58,17 @@ class LoginRepository private constructor() {
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
+        SaveSharedPreference.setUserData( context, loggedInUser)
     }
 
     private fun loginAuth(username: String, password: String): Result<LoggedInUser> {
         return try {
             // TODO: handle loggedInUser authentication
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
+            val fakeUser = LoggedInUser(
+                java.util.UUID.randomUUID().toString(),
+                "Jane Doe",
+                BitmapFactory.decodeResource(context.resources, R.drawable.user_image),
+                BitmapFactory.decodeResource(context.resources, R.drawable.default_image))
             Result.Success(fakeUser)
         } catch (e: Throwable) {
             Result.Error(IOException("Error logging in", e))
