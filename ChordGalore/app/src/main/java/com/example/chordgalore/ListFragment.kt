@@ -69,7 +69,7 @@ class ListFragment(query : Int) : Fragment() {
             override fun onItemClick(position: Int) {
                 val item = listItems[position]
                 val intent = Intent(context, SongActivity::class.java)
-                intent.putExtra("SongID", item._id)
+                intent.putExtra("SongID", item.id)
                 startActivity(intent)
             }
         })
@@ -93,16 +93,17 @@ class ListFragment(query : Int) : Fragment() {
     }
 
     private fun loadMoreItems(){
-        listItemsFull.add(TileEntity(1 + changeCounter, R.drawable.user_image, "Macarena $changeCounter", "Pepe"))
-        listItemsFull.add(TileEntity(2 + changeCounter,R.drawable.user_image, "Algo $changeCounter", "Toño"))
-        listItemsFull.add(TileEntity(3 + changeCounter,R.drawable.user_image, "E $changeCounter", "Marquiplier"))
-        listItemsFull.add(TileEntity(4 + changeCounter,R.drawable.user_image, "Otro $changeCounter", "Asu"))
-        listItemsFull.add(TileEntity(5 + changeCounter,R.drawable.user_image, "Lorem $changeCounter", "Ipsum"))
+        listItemsFull.add(TileEntity(1 + changeCounter, R.drawable.user_image, "Macarena $changeCounter", "Pepe", "Rock"))
+        listItemsFull.add(TileEntity(2 + changeCounter,R.drawable.user_image, "Algo $changeCounter", "Toño", "Mañoño"))
+        listItemsFull.add(TileEntity(3 + changeCounter,R.drawable.user_image, "E $changeCounter", "Marquiplier", "888"))
+        listItemsFull.add(TileEntity(4 + changeCounter,R.drawable.user_image, "Otro $changeCounter", "Asu","Madre"))
+        listItemsFull.add(TileEntity(5 + changeCounter,R.drawable.user_image, "Lorem $changeCounter", "Ipsum", "Opers"))
         listItemsFull.add(
             TileEntity(6 + changeCounter,
                 R.drawable.user_image,
                 "Titulototototote $changeCounter",
-                "AAAAAAAAAAAAAAAAAAAAAAAAA"
+                "AAAAAAAAAAAAAAAAAAAAAAAAA",
+                "Death Metal"
             )
         )
         changeCounter++

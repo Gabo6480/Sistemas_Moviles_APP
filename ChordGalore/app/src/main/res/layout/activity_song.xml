@@ -39,8 +39,8 @@
 
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardCornerRadius="50dp"
                         app:cardElevation="1dp"
                         app:cardPreventCornerOverlap="false">
@@ -78,6 +78,13 @@
 
                             android:layout_height="wrap_content"
                             android:text="Usuario" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:id="@+id/post_genre"
+                            android:text="Genero"/>
 
                     </LinearLayout>
 

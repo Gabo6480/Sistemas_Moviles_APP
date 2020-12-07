@@ -24,7 +24,7 @@
             android:layout_margin="8dp"
             android:padding="3dp"
             android:gravity="center"
-            android:background="@color/colorSecondary"
+            android:background="@drawable/default_image"
             android:id="@+id/profile_area">
 
             <RelativeLayout

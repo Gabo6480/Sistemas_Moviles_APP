@@ -32,6 +32,7 @@ class ContentRecyclerAdapter(arrayList : ArrayList<TileEntity>, arrayListFull : 
         val imgView : ImageView = itemView.findViewById(R.id.tile_image)
         val titleView : TextView = itemView.findViewById(R.id.tile_title)
         val subtitleView : TextView = itemView.findViewById(R.id.tile_subtitle)
+        val genreView : TextView = itemView.findViewById(R.id.tile_genre)
 
         init {
             itemView.setOnClickListener {
@@ -56,9 +57,10 @@ class ContentRecyclerAdapter(arrayList : ArrayList<TileEntity>, arrayListFull : 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val tileEntity =  _arrayList[position]
 
-        holder.imgView.setImageResource(tileEntity._image)
-        holder.titleView.text = tileEntity._title
-        holder.subtitleView.text = tileEntity._subtitle
+        holder.imgView.setImageResource(tileEntity.image)
+        holder.titleView.text = tileEntity.title
+        holder.subtitleView.text = tileEntity.subtitle
+        holder.genreView.text = tileEntity.genre
     }
 
     fun updateList(){
@@ -79,7 +81,7 @@ class ContentRecyclerAdapter(arrayList : ArrayList<TileEntity>, arrayListFull : 
                     val filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim()
                     _filter = filterPattern
 
-                    filteredList.addAll(unfilteredList.filter { item -> item._title.toLowerCase(Locale.ROOT).contains(filterPattern) })
+                    filteredList.addAll(unfilteredList.filter { item -> item.title.toLowerCase(Locale.ROOT).contains(filterPattern) })
                 }
 
                 val results = FilterResults()
