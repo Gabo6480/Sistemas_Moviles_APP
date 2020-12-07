@@ -36,8 +36,7 @@ class SaveSharedPreference {
                     getSharedPreferences(ctx).getString(PREF_PROFILE, "")?.let { it2 ->
                         getSharedPreferences(ctx).getString(PREF_PORTADA, "")?.let { it3 ->
                             LoggedInUser(
-                                //if(it.isNotEmpty()) 0 else it.toInt(10),
-                                it,
+                                if(it.isNotEmpty()) 0 else it.toInt(10),
                                 it1,
                                 base64ToBitmap(it2, ctx)
                             )
