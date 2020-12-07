@@ -454,7 +454,7 @@ class DataDbHelper (context: Context): SQLiteOpenHelper(context,bdMovilesMusica.
         cursor =  dataBase.rawQuery(" Select Post.Titulo , Us.byteImage, Us.Nombre as NombreUs , Post.ID, Cat.Nombre from Publicacion Post\n" +
                 "inner join Usuarios Us on Post.IDusuario = Us.UserID\n" +
                 "inner join Categorias Cat on Cat.ID = Post.Genero\n" +
-                "where Post.Activo = 1 AND Post.Estado = 'Redaccion' ;)",null,null)
+                "where Post.Activo = 1 AND Post.Estado = 'Publicado' ;)",null,null)
 
 
 

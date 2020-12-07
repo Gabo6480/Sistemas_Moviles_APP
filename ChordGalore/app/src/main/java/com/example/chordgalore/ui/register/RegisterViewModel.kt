@@ -7,11 +7,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chordgalore.R
+import com.example.chordgalore.data.DataDbHelper
+import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.data.Result
 import com.example.chordgalore.data.SaveSharedPreference
+import com.example.chordgalore.data.model.ImageUtilities
+import com.example.chordgalore.data.model.UsuariosLocal
 import com.example.chordgalore.data.service.APIService
 
 class RegisterViewModel : ViewModel() {
+    var DBsqlite= LoginRepository.instance()?.context?.let { DataDbHelper(it) }
     //Esto se usa para guardar el estado de la forma de ingreso
     data class RegisterFormState(
         val usermailError: Int? = null,
@@ -38,9 +43,17 @@ class RegisterViewModel : ViewModel() {
             BitmapFactory.decodeResource(context.resources, R.drawable.user))){res, t ->
 
             if (res != null) {
-                if(res)
-                _registerResult.value =
-                    RegisterResult(success = res.toString())
+                if(res) {
+                    _registerResult.value =
+                        RegisterResult(success = res.toString())
+                    var Userin : UsuariosLocal = UsuariosLocal()
+                    Userin.Nombre=name
+                    Userin.Apellidos=last
+                    Userin.Email=usermail
+                    Userin.Password =password
+                    Userin.imgArray = ImageUtilities.getByteArrayFromResourse( R.drawable.user ,context)
+                    DBsqlite?.insertUsuarios(UsuariosLocal())
+                }
                 else
                     _registerResult.value = RegisterResult(error = R.string.register_failed)
             } else {
