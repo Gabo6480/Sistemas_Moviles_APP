@@ -76,6 +76,20 @@ class APIService {
                 }
             })
         }
+        fun agregaPost(titulo:String,genero:Int,contenido:String, estado: String,userID: Int,onResultCallback:(resultado:Boolean?,t: Throwable?)->Unit){
+            val file =  Publicacion(titulo,genero,contenido,estado,userID)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result:Call<Boolean> = service.insertaPost(file)
+
+            result.enqueue(object: Callback<Boolean>{
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    onResultCallback(response.body(), null);
+                }
+            })
+        }
     }
 
 }

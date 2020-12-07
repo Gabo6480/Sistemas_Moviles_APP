@@ -17,7 +17,8 @@ data class Publicacion(
 {
     //constructor para traer los borradores de un User
     constructor(id: Int):this("","",id,-1,"","","",-1,"",-1)
-    constructor(estado: String,idUser: Int,activo: Int):this("","",-1,-1,"","",estado,idUser,"",activo)
+    //Constructor para agregar posts
+    constructor(titulo: String,genero: Int,texto: String,estado: String,idUser: Int):this(titulo,"",-1,genero,"",texto,estado,idUser,"",-1)
     constructor(idUser: Int,imagen: String,activo: Int):this("",imagen,-1,-1,"","","",idUser,"",activo)
 }
 data class Usuarios(

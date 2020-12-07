@@ -23,4 +23,7 @@ interface Service {
     @Headers("Content-Type: application/json")
     @POST("SP_Publicacion/Fg1e2GetDraftPosts")
     fun listBorradorUser(@Body fileData: Publicacion): Call<List<Publicacion>>
+    @Headers("Content-Type: application/json")
+    @POST("SP_Publicacion/Fg1e2AddPost")
+    fun insertaPost(@Body fileData: Publicacion): Call<Boolean>
 }
