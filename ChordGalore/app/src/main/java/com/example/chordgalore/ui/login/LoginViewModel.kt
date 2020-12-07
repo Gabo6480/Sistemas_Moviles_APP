@@ -8,9 +8,10 @@ import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.data.Result
 
 import com.example.chordgalore.R
+import com.example.chordgalore.data.DataDbHelper
 
 class LoginViewModel : ViewModel() {
-
+    var DBsqlite= LoginRepository.instance()?.context?.let { DataDbHelper(it) }
     //Esto se usa para guardar el estado de la forma de ingreso
     data class LoginFormState(
         val usernameError: Int? = null,

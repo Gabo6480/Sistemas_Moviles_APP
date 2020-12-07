@@ -81,7 +81,7 @@ class ContentRecyclerAdapter(arrayList : ArrayList<TileEntity>, arrayListFull : 
                     val filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim()
                     _filter = filterPattern
 
-                    filteredList.addAll(unfilteredList.filter { item -> item.title.toLowerCase(Locale.ROOT).contains(filterPattern) })
+                    filteredList.addAll(unfilteredList.filter { item -> item.title.toLowerCase(Locale.ROOT).contains(filterPattern) || item.subtitle.toLowerCase(Locale.ROOT).contains(filterPattern) || item.genre.toLowerCase(Locale.ROOT).contains(filterPattern)})
                 }
 
                 val results = FilterResults()

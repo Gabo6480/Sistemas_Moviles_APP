@@ -69,5 +69,9 @@ data class Favoritos(
 data class Categoria(
     val id: Int,
     val nombre: String
-)
+){
+    override fun toString(): String {
+        return nombre
+    }
+}
 
