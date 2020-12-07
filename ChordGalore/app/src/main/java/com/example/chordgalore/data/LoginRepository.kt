@@ -56,7 +56,7 @@ class LoginRepository private constructor() {
         return result
     }
 
-    private fun setLoggedInUser(loggedInUser: LoggedInUser) {
+    fun setLoggedInUser(loggedInUser: LoggedInUser) {
         this.user = loggedInUser
         SaveSharedPreference.setUserData( context, loggedInUser)
     }

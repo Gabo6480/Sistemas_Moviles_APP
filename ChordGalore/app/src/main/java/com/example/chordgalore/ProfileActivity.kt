@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import com.example.chordgalore.data.LoginRepository
+import com.example.chordgalore.data.model.LoggedInUser
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 
@@ -26,6 +28,11 @@ class ProfileActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, ListFragment(0)).commit()
+
+
+        profile_name.text = LoginRepository.instance()?.user?.displayName
+        profile_image.setImageBitmap(LoginRepository.instance()?.user?.profileBitmap)
+        profile_area.background = BitmapDrawable(resources, LoginRepository.instance()?.user?.portadaBitmap)
 
 
         buttonLoadPP.setOnClickListener {
@@ -51,7 +58,7 @@ class ProfileActivity : AppCompatActivity() {
 
             if(requestCode == RESULT_LOAD_PROFILE){
                 uri?.let { loadBitmapFromUri(it) }?.let { newProfileBitmap = it }
-                tile_image.setImageBitmap(newProfileBitmap)
+                profile_image.setImageBitmap(newProfileBitmap)
             }
             else if(requestCode == RESULT_LOAD_PORTADA){
                 uri?.let { loadBitmapFromUri(it) }?.let { newPortadaBitmap = it }
@@ -62,11 +69,17 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onStop () {
         super.onStop()
-        Toast.makeText(
-            applicationContext,
-            "Perfil Cerrado",
-            Toast.LENGTH_LONG
-        ).show()
+
+        if(newProfileBitmap != null || newPortadaBitmap != null) {
+            val user = LoginRepository.instance()?.user
+
+            val newUser = user?.let { LoggedInUser(it.userId, it.displayName, newProfileBitmap ?: it.profileBitmap, newPortadaBitmap ?: it.portadaBitmap) }
+            if (newUser != null) {
+                LoginRepository.instance()?.setLoggedInUser(newUser)
+            }
+        }
+
+
     }
 
     private fun loadBitmapFromUri(imageUri: Uri): Bitmap {
