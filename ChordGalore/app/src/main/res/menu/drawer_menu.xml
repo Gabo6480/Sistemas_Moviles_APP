@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_star"
             android:title="Favoritos" />
         <item
-            android:id="@+id/nav_download"
-            android:icon="@drawable/ic_file_download"
-            android:title="Descargas" />
+            android:id="@+id/nav_draft"
+            android:icon="@drawable/ic_drafts"
+            android:title="Borradores" />
     </group>
 
     <item android:title="Cuenta">
@@ -28,8 +28,4 @@
                 android:title="Cerrar Sesión" />
         </menu>
     </item>
-    <item
-        android:id="@+id/nav_config"
-        android:icon="@drawable/ic_settings"
-        android:title="Configuración" />
 </menu>

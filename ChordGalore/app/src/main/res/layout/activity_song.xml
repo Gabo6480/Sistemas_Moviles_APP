@@ -39,8 +39,8 @@
 
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardCornerRadius="50dp"
                         app:cardElevation="1dp"
                         app:cardPreventCornerOverlap="false">
@@ -79,6 +79,13 @@
                             android:layout_height="wrap_content"
                             android:text="Usuario" />
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:id="@+id/post_genre"
+                            android:text="Genero"/>
+
                     </LinearLayout>
 
                     <ImageButton
@@ -89,11 +96,12 @@
                         android:src="@drawable/ic_star" />
 
                     <ImageButton
-                        android:id="@+id/buttonDown"
+                        android:id="@+id/buttonDelete"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:contentDescription="Agregar a Descargas"
-                        android:src="@drawable/ic_file_download" />
+                        android:src="@drawable/ic_delete"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

@@ -56,14 +56,27 @@
 
             </HorizontalScrollView>
 
+            <Spinner
+                android:id="@+id/newSongGenreSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <EditText
                 android:id="@+id/newSongContentEdit"
-                android:inputType="text"
+                android:inputType="text|textMultiLine"
+                android:gravity="top"
                 android:hint="Letra de la cancion"
                 android:autofillHints="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/newSongPublicarBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Publicar" />
         </LinearLayout>
+
 
     </ScrollView>
 

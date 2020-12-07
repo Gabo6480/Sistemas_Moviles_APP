@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.custom_toolbar.*
 
 class ProfileActivity : AppCompatActivity() {
     val RESULT_LOAD_PROFILE  = 1
-    val RESULT_LOAD_PORTADA  = 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -31,19 +30,12 @@ class ProfileActivity : AppCompatActivity() {
 
         profile_name.text = LoginRepository.instance()?.user?.displayName
         profile_image.setImageBitmap(LoginRepository.instance()?.user?.profileBitmap)
-        profile_area.background = BitmapDrawable(resources, LoginRepository.instance()?.user?.portadaBitmap)
 
 
         buttonLoadPP.setOnClickListener {
             val getIntent = Intent(Intent.ACTION_GET_CONTENT)
             getIntent.type = "image/*"
             startActivityForResult(getIntent, RESULT_LOAD_PROFILE);
-        }
-
-        buttonLoadPortada.setOnClickListener {
-            val getIntent = Intent(Intent.ACTION_GET_CONTENT)
-            getIntent.type = "image/*"
-            startActivityForResult(getIntent, RESULT_LOAD_PORTADA);
         }
     }
 
@@ -59,20 +51,16 @@ class ProfileActivity : AppCompatActivity() {
                 uri?.let { loadBitmapFromUri(it) }?.let { newProfileBitmap = it }
                 profile_image.setImageBitmap(newProfileBitmap)
             }
-            else if(requestCode == RESULT_LOAD_PORTADA){
-                uri?.let { loadBitmapFromUri(it) }?.let { newPortadaBitmap = it }
-                profile_area.background = BitmapDrawable(resources,newPortadaBitmap)
-            }
         }
     }
 
     override fun onStop () {
         super.onStop()
 
-        if(newProfileBitmap != null || newPortadaBitmap != null) {
+        if(newProfileBitmap != null) {
             val user = LoginRepository.instance()?.user
 
-            val newUser = user?.let { LoggedInUser(it.userId, it.displayName, newProfileBitmap ?: it.profileBitmap, newPortadaBitmap ?: it.portadaBitmap) }
+            val newUser = user?.let { LoggedInUser(it.userId, it.displayName, newProfileBitmap ?: it.profileBitmap) }
             if (newUser != null) {
                 LoginRepository.instance()?.setLoggedInUser(newUser)
             }

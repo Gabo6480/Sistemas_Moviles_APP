@@ -53,8 +53,7 @@ class LoginRepository private constructor() {
                 val user = LoggedInUser(
                     it.id.toString(),
                     it.nombre,
-                    BitmapFactory.decodeResource(context.resources, R.drawable.user_image),
-                    BitmapFactory.decodeResource(context.resources, R.drawable.default_image))
+                    SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""),context))
                 setLoggedInUser(user)
                 onResult(Result.Success(user))
             }

@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_userName.text = LoginRepository.instance()?.user?.displayName
         nav_userPic.setImageBitmap(LoginRepository.instance()?.user?.profileBitmap)
-        nav_userBack.background = BitmapDrawable(resources,LoginRepository.instance()?.user?.portadaBitmap)
 
         val searchItem = menu?.findItem(R.id.toolbar_search)
 
@@ -134,13 +133,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .replace(R.id.fragment_container, ListFragment(1)).addToBackStack("Favorite")
                 .commit()
 
-            R.id.nav_download -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(2)).addToBackStack("Download")
+            R.id.nav_draft -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ListFragment(3)).addToBackStack("Draft")
                 .commit()
 
             R.id.nav_profile -> startActivity(Intent(this, ProfileActivity::class.java))
 
-            R.id.nav_config -> startActivity(Intent(this, SettingsActivity::class.java))
 
             R.id.nav_logout -> {
                 LoginRepository.instance()?.logout()

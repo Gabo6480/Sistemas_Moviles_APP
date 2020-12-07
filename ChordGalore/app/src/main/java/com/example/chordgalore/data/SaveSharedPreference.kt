@@ -27,7 +27,6 @@ class SaveSharedPreference {
             editor.putString(PREF_USER_NAME, user?.displayName)
             editor.putString(PREF_USER_ID, user?.userId.toString())
             editor.putString(PREF_PROFILE, user?.profileBitmap?.let { bitmapToBase64(it) })
-            editor.putString(PREF_PORTADA, user?.portadaBitmap?.let { bitmapToBase64(it) })
             editor.apply()
         }
 
@@ -40,8 +39,7 @@ class SaveSharedPreference {
                                 //if(it.isNotEmpty()) 0 else it.toInt(10),
                                 it,
                                 it1,
-                                base64ToBitmap(it2, ctx),
-                                base64ToBitmap(it3, ctx),
+                                base64ToBitmap(it2, ctx)
                             )
                         }
                     }
@@ -55,7 +53,7 @@ class SaveSharedPreference {
             editor.apply()
         }
 
-        private fun bitmapToBase64(bitmap: Bitmap) : String{
+        fun bitmapToBase64(bitmap: Bitmap) : String{
             val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos) //bm is the bitmap object
             val b: ByteArray = baos.toByteArray()
@@ -63,7 +61,7 @@ class SaveSharedPreference {
             return Base64.encodeToString(b, Base64.DEFAULT)
         }
 
-        private fun base64ToBitmap(base64: String?, ctx: Context?) : Bitmap{
+        fun base64ToBitmap(base64: String?, ctx: Context?) : Bitmap{
             val decodedString = Base64.decode(base64, Base64.DEFAULT)
             return if (decodedString != null && decodedString.isNotEmpty())
                 BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
