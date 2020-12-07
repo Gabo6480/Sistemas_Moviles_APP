@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun formLogic() {
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this)
             .get(LoginViewModel::class.java)
 
         //Esto revisa la validez de ambos campos del login
@@ -69,9 +69,6 @@ class LoginActivity : AppCompatActivity() {
             login_loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
             }
             setResult(Activity.RESULT_OK)
 
@@ -115,17 +112,6 @@ class LoginActivity : AppCompatActivity() {
                 )
             }
         }
-    }
-
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

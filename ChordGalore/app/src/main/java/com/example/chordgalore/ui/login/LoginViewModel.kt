@@ -9,7 +9,18 @@ import com.example.chordgalore.data.Result
 
 import com.example.chordgalore.R
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel : ViewModel() {
+
+    //Esto se usa para guardar el estado de la forma de ingreso
+    data class LoginFormState(
+        val usernameError: Int? = null,
+        val passwordError: Int? = null,
+        val isDataValid: Boolean = false
+    )
+    data class LoginResult(
+        val success: String? = null,
+        val error: Int? = null
+    )
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -19,11 +30,11 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+        val result = LoginRepository.instance()?.login(username, password)
 
         if (result is Result.Success) {
             _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                LoginResult(success = result.data.displayName)
         } else {
             _loginResult.value = LoginResult(error = R.string.login_failed)
         }
