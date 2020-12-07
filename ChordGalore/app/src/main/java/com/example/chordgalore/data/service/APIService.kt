@@ -7,22 +7,21 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import android.graphics.Bitmap
+import com.example.chordgalore.data.model.Publicacion
 import java.util.*
 
 class APIService {
     companion object{
-        fun mandaprueba(correo:String, passw: String,onResultCallback:(user:Usuarios?,t: Throwable?)->Unit){
+        //Funciones Usuarios
+        fun logInUsuario(correo:String, passw: String,onResultCallback:(user:Usuarios?,t: Throwable?)->Unit){
             val file =  Usuarios(correo,passw)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
             val result: Call<List<Usuarios>> = service.logueate(file)
 
             result.enqueue(object: Callback<List<Usuarios>>{
-
-
                 override fun onFailure(call: Call<List<Usuarios>>, t: Throwable) {
                     onResultCallback(null, t)
                 }
-
                 override fun onResponse(call: Call<List<Usuarios>>, response: Response<List<Usuarios>>) {
                     val arrayItems =  response.body()
                     val user =
@@ -31,7 +30,35 @@ class APIService {
                 }
             })
         }
+        fun registroUsuario(nombre:String,apellidos:String,correo:String, passw: String,imagen: String,onResultCallback:(status:Int?,t: Throwable?)->Unit){
+            val file =  Usuarios(nombre,apellidos,correo,passw,imagen)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result: Call<Int> = service.registrate(file)
 
+            result.enqueue(object: Callback<Int>{
+                override fun onFailure(call: Call<Int>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+
+                    onResultCallback( response.body(), null);
+                }
+            })
+        }
+        //Funciones Publicaciones
+        fun traerPublicaciones(onResultCallback:(publis: List<Publicacion>?, t: Throwable?)->Unit){
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result: Call<List<Publicacion>> = service.listPublicaciones()
+
+            result.enqueue(object: Callback<List<Publicacion>>{
+                override fun onFailure(call: Call<List<Publicacion>>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<List<Publicacion>>, response: Response<List<Publicacion>>) {
+                    onResultCallback(  response.body() , null);
+                }
+            })
+        }
     }
 
 }

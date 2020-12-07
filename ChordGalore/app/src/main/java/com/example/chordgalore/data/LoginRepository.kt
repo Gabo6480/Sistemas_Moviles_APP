@@ -48,7 +48,7 @@ class LoginRepository private constructor() {
 
     fun login(username: String, password: String, onResult : (result:Result<LoggedInUser>) -> Unit){
         // handle login
-        APIService.mandaprueba(username, password) { it, t ->
+        APIService.logInUsuario(username, password) { it, t ->
             if(it != null){
                 val user = LoggedInUser(
                     it.id.toString(),

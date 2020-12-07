@@ -26,7 +26,11 @@ data class Usuarios(
     val activo: Int
 )
 {
-    constructor(email: String,contra: String):this(14,"",contra,"",email,"",-1)
+    //Constructor de logInUser
+    constructor(email: String,contra: String):this(-1,"",contra,"",email,"",-1)
+    //Constructor de registroUser
+    constructor(nombre: String,apellidos: String,email: String,contra: String,imagen: String):this(-1,nombre,contra,apellidos,email,imagen,-1)
+    //Constructor
     constructor(ID: Int,nombre: String,imagen: String):this(ID,nombre,"","","",imagen,-1)
 }
 data class Fotos(
