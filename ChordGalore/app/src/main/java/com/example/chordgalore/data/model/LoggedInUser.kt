@@ -9,7 +9,5 @@ import android.graphics.Bitmap
 data class LoggedInUser(
     val userId: String,
     val displayName: String,
-    val profileBitmap: Bitmap,
-
-    val portadaBitmap: Bitmap
+    val profileBitmap: Bitmap
 )

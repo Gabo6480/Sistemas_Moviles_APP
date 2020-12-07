@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_userName.text = LoginRepository.instance()?.user?.displayName
         nav_userPic.setImageBitmap(LoginRepository.instance()?.user?.profileBitmap)
-        nav_userBack.background = BitmapDrawable(resources,LoginRepository.instance()?.user?.portadaBitmap)
 
         val searchItem = menu?.findItem(R.id.toolbar_search)
 
