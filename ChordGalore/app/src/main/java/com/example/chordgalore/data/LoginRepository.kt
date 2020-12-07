@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import com.example.chordgalore.R
 import com.example.chordgalore.data.model.LoggedInUser
+import com.example.chordgalore.data.service.APIService
 import java.io.IOException
 
 /**
@@ -45,15 +46,22 @@ class LoginRepository private constructor() {
         SaveSharedPreference.clearUserName(context)
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    fun login(username: String, password: String, onResult : (result:Result<LoggedInUser>) -> Unit){
         // handle login
-        val result = loginAuth(username, password)
-
-        if (result is Result.Success) {
-            setLoggedInUser(result.data)
+        APIService.mandaprueba(username, password) { it, t ->
+            if(it != null){
+                val user = LoggedInUser(
+                    it.ID.toString(),
+                    it.nombre,
+                    BitmapFactory.decodeResource(context.resources, R.drawable.user_image),
+                    BitmapFactory.decodeResource(context.resources, R.drawable.default_image))
+                setLoggedInUser(user)
+                onResult(Result.Success(user))
+            }
+            else{
+                onResult(Result.Error(IOException("Error logging in", t)))
+            }
         }
-
-        return result
     }
 
     fun setLoggedInUser(loggedInUser: LoggedInUser) {
@@ -61,17 +69,4 @@ class LoginRepository private constructor() {
         SaveSharedPreference.setUserData( context, loggedInUser)
     }
 
-    private fun loginAuth(username: String, password: String): Result<LoggedInUser> {
-        return try {
-            // TODO: handle loggedInUser authentication
-            val fakeUser = LoggedInUser(
-                java.util.UUID.randomUUID().toString(),
-                "Jane Doe",
-                BitmapFactory.decodeResource(context.resources, R.drawable.user_image),
-                BitmapFactory.decodeResource(context.resources, R.drawable.default_image))
-            Result.Success(fakeUser)
-        } catch (e: Throwable) {
-            Result.Error(IOException("Error logging in", e))
-        }
-    }
 }

@@ -30,13 +30,13 @@ class LoginViewModel : ViewModel() {
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
-        val result = LoginRepository.instance()?.login(username, password)
-
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = result.data.displayName)
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+        val result = LoginRepository.instance()?.login(username, password){
+            if (it is Result.Success) {
+                _loginResult.value =
+                    LoginResult(success = it.data.displayName)
+            } else {
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+            }
         }
     }
 
@@ -55,7 +55,7 @@ class LoginViewModel : ViewModel() {
 
     }
 
-    // A placeholder username validation check
+    // A placeholder username validation checkit
     private fun isUserNameValid(username: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(username).matches()
     }

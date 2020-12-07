@@ -2,7 +2,6 @@ package com.example.chordgalore.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -26,7 +25,7 @@ class SaveSharedPreference {
         fun setUserData(ctx: Context?, user: LoggedInUser?) {
             val editor: SharedPreferences.Editor = getSharedPreferences(ctx).edit()
             editor.putString(PREF_USER_NAME, user?.displayName)
-            editor.putString(PREF_USER_ID, user?.userId)
+            editor.putString(PREF_USER_ID, user?.userId.toString())
             editor.putString(PREF_PROFILE, user?.profileBitmap?.let { bitmapToBase64(it) })
             editor.putString(PREF_PORTADA, user?.portadaBitmap?.let { bitmapToBase64(it) })
             editor.apply()
@@ -38,6 +37,7 @@ class SaveSharedPreference {
                     getSharedPreferences(ctx).getString(PREF_PROFILE, "")?.let { it2 ->
                         getSharedPreferences(ctx).getString(PREF_PORTADA, "")?.let { it3 ->
                             LoggedInUser(
+                                //if(it.isNotEmpty()) 0 else it.toInt(10),
                                 it,
                                 it1,
                                 base64ToBitmap(it2, ctx),

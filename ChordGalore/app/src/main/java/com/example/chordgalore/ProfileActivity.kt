@@ -9,7 +9,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Toast
 import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.data.model.LoggedInUser
 import kotlinx.android.synthetic.main.activity_profile.*
