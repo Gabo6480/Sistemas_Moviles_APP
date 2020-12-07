@@ -15,11 +15,12 @@ data class Publicacion(
     val activo: Int
 )
 {
-    //constructor para traer los borradores de un User
+    //constructor para traer los borradores de un User y eliminar un post
     constructor(id: Int):this("","",id,-1,"","","",-1,"",-1)
     //Constructor para agregar posts
     constructor(titulo: String,genero: Int,texto: String,estado: String,idUser: Int):this(titulo,"",-1,genero,"",texto,estado,idUser,"",-1)
-    constructor(idUser: Int,imagen: String,activo: Int):this("",imagen,-1,-1,"","","",idUser,"",activo)
+    //Constructor para editar post
+    constructor(id: Int,titulo: String,genero: Int,texto: String,estado: String):this(titulo,"",id,genero,"",texto,estado,-1,"",-1)
 }
 data class Usuarios(
     val id: Int,
@@ -35,8 +36,12 @@ data class Usuarios(
     constructor(email: String,contra: String):this(-1,"",contra,"",email,"",-1)
     //Constructor de registroUser
     constructor(nombre: String,apellidos: String,email: String,contra: String,imagen: String):this(-1,nombre,contra,apellidos,email,imagen,-1)
-    //Constructor
-    constructor(ID: Int,nombre: String,imagen: String):this(ID,nombre,"","","",imagen,-1)
+    //Constructor de UpdateUser
+    constructor(id: Int,nombre: String,apellidos: String,email: String,contra: String,imagen: String):this(id,nombre,contra,apellidos,email,imagen,-1)
+    //Constructor de logInUser2
+    constructor(id: Int,nombre: String,imagen: String):this(id,nombre,"","","",imagen,-1)
+    //Constructor de Delete y obtener 1User
+    constructor(id: Int):this(id,"","","","","",-1)
 }
 data class Fotos(
     val id: Int,
@@ -44,10 +49,21 @@ data class Fotos(
     val contenido: String,
     val activo: Boolean
 )
+{
+    //Constructor para agregar fotos
+    constructor(idPubli: Int,contenido: String):this(-1,idPubli,contenido,false)
+    //Constructor para traer fotos
+    constructor(idPubli: Int):this(-1,idPubli,"",false)
+}
 data class Favoritos(
     val id: Int,
     val idUser: Int,
     val idPubli: Int,
     val activo: Int
+)
+
+data class Categoria(
+    val id: Int,
+    val nombre: String
 )
 
