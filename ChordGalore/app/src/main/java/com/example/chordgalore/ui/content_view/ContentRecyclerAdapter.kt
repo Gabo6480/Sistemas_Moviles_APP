@@ -57,7 +57,7 @@ class ContentRecyclerAdapter(arrayList : ArrayList<TileEntity>, arrayListFull : 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val tileEntity =  _arrayList[position]
 
-        holder.imgView.setImageResource(tileEntity.image)
+        holder.imgView.setImageBitmap(tileEntity.image)
         holder.titleView.text = tileEntity.title
         holder.subtitleView.text = tileEntity.subtitle
         holder.genreView.text = tileEntity.genre

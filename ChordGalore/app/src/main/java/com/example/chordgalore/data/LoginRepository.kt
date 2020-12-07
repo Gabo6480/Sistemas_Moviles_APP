@@ -51,7 +51,7 @@ class LoginRepository private constructor() {
         APIService.logInUsuario(username, password) { it, t ->
             if(it != null){
                 val user = LoggedInUser(
-                    it.id.toString(),
+                    it.id,
                     it.nombre,
                     SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""),context))
                 setLoggedInUser(user)

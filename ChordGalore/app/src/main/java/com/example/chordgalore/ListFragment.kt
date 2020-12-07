@@ -11,14 +11,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chordgalore.data.LoginRepository
+import com.example.chordgalore.data.SaveSharedPreference
 import com.example.chordgalore.data.model.TileEntity
+import com.example.chordgalore.data.service.APIService
 import com.example.chordgalore.ui.content_view.ContentRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
 
 
 //Query va a ser utilizado para seleccionar que lista entre Home, Favorite y Downloads le vamos a mostrar
 //Se vale cambiar el tipo de dato si se considera más adecuado
-class ListFragment(query : Int) : Fragment() {
+class ListFragment(val query : Int) : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ContentRecyclerAdapter
@@ -82,37 +85,18 @@ class ListFragment(query : Int) : Fragment() {
                     val totalItemCount = layoutManager.itemCount
                     val lastVisible = layoutManager.findLastVisibleItemPosition()
 
-                    val endHasBeenReached = lastVisible + 5 >= totalItemCount
-                    if (totalItemCount > 0 && endHasBeenReached) {
-                        progressBar.visibility = View.VISIBLE
-                        loadMoreItems()
-                    }
+                    //val endHasBeenReached = lastVisible + 5 >= totalItemCount
+                    //if (totalItemCount > 0 && endHasBeenReached) {
+                    //    progressBar.visibility = View.VISIBLE
+                    //    loadMoreItems()
+                    //}
                 }
             }
         })
     }
 
-    private fun loadMoreItems(){
-        listItemsFull.add(TileEntity(1 + changeCounter, R.drawable.user_image, "Macarena $changeCounter", "Pepe", "Rock"))
-        listItemsFull.add(TileEntity(2 + changeCounter,R.drawable.user_image, "Algo $changeCounter", "Toño", "Mañoño"))
-        listItemsFull.add(TileEntity(3 + changeCounter,R.drawable.user_image, "E $changeCounter", "Marquiplier", "888"))
-        listItemsFull.add(TileEntity(4 + changeCounter,R.drawable.user_image, "Otro $changeCounter", "Asu","Madre"))
-        listItemsFull.add(TileEntity(5 + changeCounter,R.drawable.user_image, "Lorem $changeCounter", "Ipsum", "Opers"))
-        listItemsFull.add(
-            TileEntity(6 + changeCounter,
-                R.drawable.user_image,
-                "Titulototototote $changeCounter",
-                "AAAAAAAAAAAAAAAAAAAAAAAAA",
-                "Death Metal"
-            )
-        )
-        changeCounter++
-
-        //Esto pospone el llamado del update por 1 frame para evitar errores
-        Handler(Looper.getMainLooper()).postDelayed({
-            updateMoreItems()
-        }, 0)
-
+    fun setFilter(filter : String?){
+        adapter.filter.filter(filter)
     }
 
     private fun updateMoreItems(){
@@ -123,14 +107,28 @@ class ListFragment(query : Int) : Fragment() {
         adapter.updateList()
     }
 
-    fun setFilter(filter : String?){
-        adapter.filter.filter(filter)
-    }
-
     private fun getArrayItems(){
-        loadMoreItems()
-        loadMoreItems()
+        when(query){
+            0 -> APIService.traerPublicaciones { publis, t ->
+                print("Done")
+                publis?.forEach {
+                    print("Load")
+                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                }
+                updateMoreItems()
+            }
 
-        lastItemIndex = listItemsFull.lastIndex
+            1 -> {//Favoritos
+                 }
+
+            2 -> LoginRepository.instance()?.user?.userId?.let { APIService.traerBorradorUser(it){ publis, t ->
+                publis?.forEach {
+                    print("Load")
+                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                }
+                updateMoreItems()
+            } }
+        }
+
     }
 }

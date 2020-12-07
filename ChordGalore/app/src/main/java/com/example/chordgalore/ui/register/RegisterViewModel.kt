@@ -40,7 +40,7 @@ class RegisterViewModel : ViewModel() {
         val name = username.substring(0, username.indexOf(" "))
         val last = username.substring(username.indexOf(" ") + 1)
         APIService.registroUsuario(name, last,usermail,password, SaveSharedPreference.bitmapToBase64(
-            BitmapFactory.decodeResource(context.resources, R.drawable.user))){res, t ->
+            BitmapFactory.decodeResource(context.resources, R.drawable.user_image))){res, t ->
 
             if (res != null) {
                 if(res) {
