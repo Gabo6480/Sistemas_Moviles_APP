@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import com.example.chordgalore.data.DataDbHelper
 import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.ui.login.LoginActivity
 import com.google.android.material.navigation.NavigationView
@@ -22,10 +23,13 @@ import kotlinx.android.synthetic.main.drawer_header.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var toggle: ActionBarDrawerToggle
+    var DBSqlite = DataDbHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         LoginRepository.instance()?.context = applicationContext
 

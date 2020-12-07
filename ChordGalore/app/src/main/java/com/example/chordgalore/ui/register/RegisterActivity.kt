@@ -56,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
             //Desactivamos el icono de login
             register_loading.visibility = View.GONE
             if (registerResult.error != null) {
-                Toast.makeText(applicationContext, "¡Ha fallado el registro!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Ha fallado el registro", Toast.LENGTH_SHORT).show()
             }
             setResult(Activity.RESULT_OK)
             if(registerResult.success != null) {
@@ -109,7 +109,8 @@ class RegisterActivity : AppCompatActivity() {
                             register_edit_name.editText?.text.toString(),
                             register_edit_mail.editText?.text.toString(),
                             register_edit_pass.editText?.text.toString(),
-                            register_edit_confirm.editText?.text.toString()
+                            register_edit_confirm.editText?.text.toString(),
+                            context
                         )
                 }
                 false
@@ -123,7 +124,8 @@ class RegisterActivity : AppCompatActivity() {
                     register_edit_name.editText?.text.toString(),
                     register_edit_mail.editText?.text.toString(),
                     register_edit_pass.editText?.text.toString(),
-                    register_edit_confirm.editText?.text.toString()
+                    register_edit_confirm.editText?.text.toString(),
+                    context
                 )
             }
         }

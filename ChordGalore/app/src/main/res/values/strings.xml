@@ -19,6 +19,7 @@
     <string name="invalid_password_content">La contraseña tiene que contener un Numero, una Mayuscula y una letra</string>
     <string name="invalid_passconfirm">Las contraseñas no coinciden</string>
     <string name="login_failed">"El inicio de sesión ha fallado"</string>
+    <string name="register_failed">"El registro ha fallado"</string>
 
     <string name="title_activity_settings">Configuración</string>
     <string name="title_activity_profile">Perfil</string>

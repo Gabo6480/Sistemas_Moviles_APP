@@ -7,11 +7,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import android.graphics.Bitmap
+import com.example.chordgalore.data.DataDbHelper
 import com.example.chordgalore.data.model.Publicacion
 import java.util.*
 
 class APIService {
     companion object{
+
         //Funciones Usuarios
         fun logInUsuario(correo:String, passw: String,onResultCallback:(user:Usuarios?,t: Throwable?)->Unit){
             val file =  Usuarios(correo,passw)
@@ -30,16 +32,17 @@ class APIService {
                 }
             })
         }
-        fun registroUsuario(nombre:String,apellidos:String,correo:String, passw: String,imagen: String,onResultCallback:(status:Int?,t: Throwable?)->Unit){
-            val file =  Usuarios(nombre,apellidos,correo,passw,imagen)
-            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
-            val result: Call<Int> = service.registrate(file)
 
-            result.enqueue(object: Callback<Int>{
-                override fun onFailure(call: Call<Int>, t: Throwable) {
+        fun registroUsuario(nombre:String,apellidos:String,correo:String, passw: String,imagen: String,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
+            val file =  Usuarios(nombre,apellidos,correo,passw, "data:image/;base64,$imagen")
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result: Call<Boolean> = service.registrate(file)
+
+            result.enqueue(object: Callback<Boolean>{
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     onResultCallback(null, t)
                 }
-                override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
 
                     onResultCallback( response.body(), null);
                 }
