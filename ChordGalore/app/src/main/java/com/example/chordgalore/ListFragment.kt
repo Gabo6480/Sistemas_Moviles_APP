@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.data.SaveSharedPreference
 import com.example.chordgalore.data.model.TileEntity
 import com.example.chordgalore.data.service.APIService
@@ -120,8 +121,13 @@ class ListFragment(val query : Int) : Fragment() {
             1 -> {//Favoritos
                  }
 
-            2 -> {//Borradores
-                    }
+            2 -> LoginRepository.instance()?.user?.userId?.let { APIService.traerBorradorUser(it){ publis, t ->
+                publis?.forEach {
+                    print("Load")
+                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                }
+                updateMoreItems()
+            } }
         }
 
     }
