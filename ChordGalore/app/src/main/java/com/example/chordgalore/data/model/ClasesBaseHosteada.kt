@@ -17,7 +17,7 @@ data class Publicacion(
     constructor(idUser: Int,imagen: String,activo: Int):this("",imagen,-1,-1,"","",idUser,activo)
 }
 data class Usuarios(
-    val ID: Int,
+    val id: Int,
     val nombre: String,
     val contra: String,
     val apellidos: String,
@@ -26,7 +26,7 @@ data class Usuarios(
     val activo: Int
 )
 {
-    constructor(email: String,contra: String):this(-1,"",contra,"",email,"",-1)
+    constructor(email: String,contra: String):this(14,"",contra,"",email,"",-1)
     constructor(ID: Int,nombre: String,imagen: String):this(ID,nombre,"","","",imagen,-1)
 }
 data class Fotos(

@@ -26,7 +26,7 @@ class APIService {
                 override fun onResponse(call: Call<List<Usuarios>>, response: Response<List<Usuarios>>) {
                     val arrayItems =  response.body()
                     val user =
-                        arrayItems?.get(0)?.let { Usuarios(it.ID,it.nombre + " " + it.apellidos,it.imagen) };
+                        arrayItems?.get(0)?.let { Usuarios(it.id,it.nombre + " " + it.apellidos,it.imagen) };
                     onResultCallback(user, null);
                 }
             })

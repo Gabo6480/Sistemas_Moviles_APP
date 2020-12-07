@@ -39,6 +39,6 @@ interface Service {
     fun getFile(@Path("id") id:Int): Call<List<File>>*/
     ////////POST GEO
     @Headers("Content-Type: application/json")
-    @POST("SP_Usuario/Fg1e2GetOneUser")
+    @POST("SP_Usuario/Fg1e2GetLogInUser")
     fun logueate(@Body fileData: Usuarios): Call<List<Usuarios>>
 }

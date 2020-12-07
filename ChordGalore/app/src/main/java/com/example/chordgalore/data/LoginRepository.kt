@@ -51,7 +51,7 @@ class LoginRepository private constructor() {
         APIService.mandaprueba(username, password) { it, t ->
             if(it != null){
                 val user = LoggedInUser(
-                    it.ID.toString(),
+                    it.id.toString(),
                     it.nombre,
                     BitmapFactory.decodeResource(context.resources, R.drawable.user_image),
                     BitmapFactory.decodeResource(context.resources, R.drawable.default_image))
