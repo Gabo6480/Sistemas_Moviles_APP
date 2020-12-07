@@ -15,7 +15,7 @@ import com.example.chordgalore.data.model.*
 import java.lang.Exception
 import kotlinx.android.synthetic.main.activity_main.*
 
-class DataDbHelper (var context: Context): SQLiteOpenHelper(context,bdMovilesMusica.DB_NAME,null,bdMovilesMusica.DB_VERSION){
+class DataDbHelper (context: Context): SQLiteOpenHelper(context,bdMovilesMusica.DB_NAME,null,bdMovilesMusica.DB_VERSION){
 
     //-----------Usuarios---------------------------------------------------------------------------------------------------------//
     override fun onCreate(db: SQLiteDatabase?) {
@@ -97,10 +97,10 @@ class DataDbHelper (var context: Context): SQLiteOpenHelper(context,bdMovilesMus
             val result =  dataBase.insert(bdMovilesMusica.tbUsuario.TABLE_NAME, null, values)
 
             if (result == (0).toLong()) {
-                Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
             }
 
         }catch (e: Exception){
@@ -175,12 +175,12 @@ class DataDbHelper (var context: Context): SQLiteOpenHelper(context,bdMovilesMus
 
         if(data.moveToFirst()){
             do {
-                var nombre = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_NOMBRE)).toString()
-                var Contra = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_PASSWORD)).toString()
-                var Apellidos = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_APELLIDOS)).toString()
-                var Email = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_EMAIL)).toString()
-                var imgArray = data.getBlob(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_IMG))
-                var IDusuario = data.getInt(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_ID))
+                val nombre = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_NOMBRE)).toString()
+                val Contra = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_PASSWORD)).toString()
+                val Apellidos = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_APELLIDOS)).toString()
+                val Email = data.getString(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_EMAIL)).toString()
+                val imgArray = data.getBlob(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_IMG))
+                val IDusuario = data.getInt(data.getColumnIndex(bdMovilesMusica.tbUsuario.COL_ID))
 
                 ListUsers.add(UsuariosLocal(nombre,Apellidos,Email,Contra,IDusuario,imgArray,1))
             }while (data.moveToNext())
@@ -287,10 +287,10 @@ class DataDbHelper (var context: Context): SQLiteOpenHelper(context,bdMovilesMus
             val result =  dataBase.insert(bdMovilesMusica.tbCategorias.TABLE_NAME, null, values)
 
             if (result == (0).toLong()) {
-                Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
             }
             Log.d("Insert", "pues se hizo ");
         }catch (e: Exception){
@@ -352,10 +352,10 @@ class DataDbHelper (var context: Context): SQLiteOpenHelper(context,bdMovilesMus
             val result =  dataBase.insert(bdMovilesMusica.tbPublicaciones.TABLE_NAME, null, values)
 
             if (result == (0).toLong()) {
-                Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
             }
             Log.d("Insert", "pues se hizo ");
         }catch (e: Exception){
@@ -380,10 +380,10 @@ class DataDbHelper (var context: Context): SQLiteOpenHelper(context,bdMovilesMus
             val result =  dataBase.insert(bdMovilesMusica.tbFavoritos.TABLE_NAME, null, values)
 
             if (result == (0).toLong()) {
-                Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Failed", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
             }
             Log.d("Insert", "pues se hizo ");
         }catch (e: Exception){
@@ -414,9 +414,9 @@ class DataDbHelper (var context: Context): SQLiteOpenHelper(context,bdMovilesMus
 
         if(data2.moveToFirst()){
             do {
-                var titulo = data2.getString(data2.getColumnIndex("Titulo")).toString()
-                var IDFAv = data2.getInt(data2.getColumnIndex("IDFAV")).toInt()
-                var IDpost = data2.getInt(data2.getColumnIndex("IDPublicacion")).toInt()
+                val titulo = data2.getString(data2.getColumnIndex("Titulo")).toString()
+                val IDFAv = data2.getInt(data2.getColumnIndex("IDFAV")).toInt()
+                val IDpost = data2.getInt(data2.getColumnIndex("IDPublicacion")).toInt()
 
 
                 ListaFav.add(FavoritosLocal(IDFAv,UserID,IDpost,1,"pepito",titulo))

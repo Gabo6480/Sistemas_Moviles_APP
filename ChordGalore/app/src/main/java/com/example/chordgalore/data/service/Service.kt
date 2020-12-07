@@ -13,9 +13,10 @@ interface Service {
     @Headers("Content-Type: application/json")
     @POST("SP_Usuario/Fg1e2GetLogInUser")
     fun logueate(@Body fileData: Usuarios): Call<List<Usuarios>>
+
     @Headers("Content-Type: application/json")
-    @POST("SP_Usuario/Fg1e2GetLogInUser")
-    fun registrate(@Body fileData: Usuarios): Call<Int>
+    @POST("SP_Usuario/Fg1e2Add_Usuario")
+    fun registrate(@Body fileData: Usuarios): Call<Boolean>
     //////////////////Publicacion
     @GET("SP_Publicacion/Fg1e2GetAllPost")
     fun listPublicaciones(): Call<List<Publicacion>> //Nos va a regresar la lista de publi

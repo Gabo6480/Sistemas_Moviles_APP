@@ -1,11 +1,15 @@
 package com.example.chordgalore.ui.register
 
+import android.content.Context
+import android.graphics.BitmapFactory
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chordgalore.R
 import com.example.chordgalore.data.Result
+import com.example.chordgalore.data.SaveSharedPreference
+import com.example.chordgalore.data.service.APIService
 
 class RegisterViewModel : ViewModel() {
     //Esto se usa para guardar el estado de la forma de ingreso
@@ -27,17 +31,23 @@ class RegisterViewModel : ViewModel() {
     private val _registerResult = MutableLiveData<RegisterResult>()
     val registerResult: LiveData<RegisterResult> = _registerResult
 
-    fun register(username: String, usermail: String, password: String, passconfirm: String) {
-        print("hola")
-        // can be launched in a separate asynchronous job
-        // TODO: Agregar logica de registo
+    fun register(username: String, usermail: String, password: String, passconfirm: String, context: Context) {
+        val name = username.substring(0, username.indexOf(" "))
+        val last = username.substring(username.indexOf(" ") + 1)
+        APIService.registroUsuario(name, last,usermail,password, SaveSharedPreference.bitmapToBase64(
+            BitmapFactory.decodeResource(context.resources, R.drawable.user))){res, t ->
 
-        //if (result is Result.Success) {
-        //    _registerResult.value =
-        //        RegisterResult(success = result.data.displayName)
-        //} else {
-        //    _registerResult.value = RegisterResult(error = R.string.login_failed)
-        //}
+            if (res != null) {
+                if(res)
+                _registerResult.value =
+                    RegisterResult(success = res.toString())
+                else
+                    _registerResult.value = RegisterResult(error = R.string.register_failed)
+            } else {
+                _registerResult.value = RegisterResult(error = R.string.register_failed)
+            }
+
+        }
     }
 
     fun registerDataChanged(username: String, usermail: String, password: String, passconfirm: String) {
@@ -89,9 +99,9 @@ class RegisterViewModel : ViewModel() {
 
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Int {
-        return if (Regex("^(?=.*\\d+)(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*[a-zA-Z]).{8,}\$", RegexOption.MULTILINE).matches(password))
+        return if (Regex("^(?=.*\\d+)(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*[a-zA-Z\\d]*).{8,}\$", RegexOption.MULTILINE).matches(password))
             0
-        else if(password.length < 7)
+        else if(password.length < 8)
             1
         else
             2
