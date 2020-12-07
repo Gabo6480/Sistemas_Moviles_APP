@@ -18,6 +18,6 @@ interface Service {
     @POST("SP_Usuario/Fg1e2Add_Usuario")
     fun registrate(@Body fileData: Usuarios): Call<Boolean>
     //////////////////Publicacion
-    @GET("SP_Publicacion/Fg1e2GetAllPost")
+    @GET("SP_Publicacion/Fg1e2GetAllPosts")
     fun listPublicaciones(): Call<List<Publicacion>> //Nos va a regresar la lista de publi
 }

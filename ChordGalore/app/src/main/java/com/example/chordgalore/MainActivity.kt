@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .commit()
 
             R.id.nav_draft -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(3)).addToBackStack("Draft")
+                .replace(R.id.fragment_container, ListFragment(2)).addToBackStack("Draft")
                 .commit()
 
             R.id.nav_profile -> startActivity(Intent(this, ProfileActivity::class.java))
