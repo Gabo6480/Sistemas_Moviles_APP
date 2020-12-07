@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.chordgalore.MainActivity
 import com.example.chordgalore.R
+import com.example.chordgalore.ui.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 
@@ -31,6 +32,10 @@ class LoginActivity : AppCompatActivity() {
         //Indicamos que vamos a usar una toolbar
         setSupportActionBar(toolbar)
 
+        login_register.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
         //Esta funcion crea toda la logica de la validación
         formLogic()
     }
@@ -46,12 +51,8 @@ class LoginActivity : AppCompatActivity() {
             // desactivar el boton de login a menos que ambos campos dean validos
             login_button.isEnabled = loginState.isDataValid
 
-            if (loginState.usernameError != null) {
-                login_edit_mail.error = getString(loginState.usernameError)
-            }
-            if (loginState.passwordError != null) {
-                login_edit_pass.error = getString(loginState.passwordError)
-            }
+            login_edit_mail.error = if (loginState.usernameError != null) getString(loginState.usernameError) else ""
+            login_edit_pass.error = if (loginState.passwordError != null) getString(loginState.passwordError) else ""
         })
 
         //Una vez que se haya completado de procesar el resultado del login

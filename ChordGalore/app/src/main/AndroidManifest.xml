@@ -9,7 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewSongActivity"
+        <activity android:name=".ui.register.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".ui.login.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.login.LoginActivity" />
+
+        </activity>
+        <activity
+            android:name=".NewSongActivity"
             android:label="@string/title_activity_new_song"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -48,8 +57,7 @@
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login">
-        </activity>
+            android:label="@string/title_activity_login"/>
     </application>
 
 </manifest>
