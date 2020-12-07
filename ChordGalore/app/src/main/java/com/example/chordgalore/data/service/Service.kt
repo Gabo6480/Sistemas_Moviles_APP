@@ -20,4 +20,7 @@ interface Service {
     //////////////////Publicacion
     @GET("SP_Publicacion/Fg1e2GetAllPost")
     fun listPublicaciones(): Call<List<Publicacion>> //Nos va a regresar la lista de publi
+    @Headers("Content-Type: application/json")
+    @POST("SP_Publicacion/Fg1e2GetDraftPosts")
+    fun listBorradorUser(@Body fileData: Publicacion): Call<List<Publicacion>>
 }

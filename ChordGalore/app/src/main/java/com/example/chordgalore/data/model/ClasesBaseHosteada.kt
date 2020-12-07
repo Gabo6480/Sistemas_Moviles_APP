@@ -15,6 +15,8 @@ data class Publicacion(
     val activo: Int
 )
 {
+    //constructor para traer los borradores de un User
+    constructor(id: Int):this("","",id,-1,"","","",-1,"",-1)
     constructor(estado: String,idUser: Int,activo: Int):this("","",-1,-1,"","",estado,idUser,"",activo)
     constructor(idUser: Int,imagen: String,activo: Int):this("",imagen,-1,-1,"","","",idUser,"",activo)
 }
