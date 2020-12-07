@@ -1,12 +1,14 @@
 package com.example.chordgalore
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -15,6 +17,7 @@ import com.example.chordgalore.ui.login.LoginActivity
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
+import kotlinx.android.synthetic.main.drawer_header.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         LoginRepository.instance()?.context = applicationContext
 
-        if(!LoginRepository.instance()?.isLoggedIn!!) {
+        if(LoginRepository.instance()?.user == null) {
             LoginRepository.instance()?.autoLogin()
             if (LoginRepository.instance()?.isLoggedIn!!) {
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -64,6 +67,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
+
+        nav_userName.text = LoginRepository.instance()?.user?.displayName
+        nav_userPic.setImageBitmap(LoginRepository.instance()?.user?.profileBitmap)
+        nav_userBack.background = BitmapDrawable(resources,LoginRepository.instance()?.user?.portadaBitmap)
 
         val searchItem = menu?.findItem(R.id.toolbar_search)
 
@@ -135,7 +142,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.nav_config -> startActivity(Intent(this, SettingsActivity::class.java))
 
-            R.id.nav_login -> startActivity(Intent(this, LoginActivity::class.java))
+            R.id.nav_logout -> {
+                LoginRepository.instance()?.logout()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
 
         }
 
