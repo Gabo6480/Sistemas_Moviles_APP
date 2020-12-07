@@ -96,11 +96,12 @@
                         android:src="@drawable/ic_star" />
 
                     <ImageButton
-                        android:id="@+id/buttonDown"
+                        android:id="@+id/buttonDelete"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:contentDescription="Agregar a Descargas"
-                        android:src="@drawable/ic_file_download" />
+                        android:src="@drawable/ic_delete"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
