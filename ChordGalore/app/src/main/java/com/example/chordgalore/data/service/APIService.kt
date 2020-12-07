@@ -140,7 +140,7 @@ class APIService {
                 override fun onResponse(call: Call<List<Publicacion>>, response: Response<List<Publicacion>>) {
                     val arrayItems =  response.body()
                     val notice =
-                        arrayItems?.get(0)?.let { Publicacion(it.id,it.nombre,it.imagen,it.titulo,it.favorito,it.generoN,it.texto) };
+                        arrayItems?.get(0)?.let { Publicacion(it.id,it.nombre,it.imagen,it.titulo,it.idUser,it.activo,it.favorito,it.estado,it.genero,it.generoN,it.texto) };
                     onResultCallback(  notice , null);
                 }
             })
