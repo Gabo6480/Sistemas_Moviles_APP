@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 
@@ -57,6 +58,15 @@ class ProfileActivity : AppCompatActivity() {
                 profile_area.background = BitmapDrawable(resources,newPortadaBitmap)
             }
         }
+    }
+
+    override fun onStop () {
+        super.onStop()
+        Toast.makeText(
+            applicationContext,
+            "Perfil Cerrado",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun loadBitmapFromUri(imageUri: Uri): Bitmap {
