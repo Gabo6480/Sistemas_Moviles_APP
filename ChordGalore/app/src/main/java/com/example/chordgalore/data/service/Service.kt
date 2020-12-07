@@ -64,4 +64,14 @@ interface Service {
 
     @GET("SP_Categoria/Fg1e2GetCategorias")
     fun listCategoria(): Call<List<Categoria>> //Nos va a regresar la lista de publi
+
+    /////////////////Favoritos
+    @Headers("Content-Type: application/json")
+    @POST("SP_Fav/Fg1e2GetAllFav")
+    fun traeFavoritos(@Body fileData: Favoritos): Call<List<Publicacion>>
+
+    @Headers("Content-Type: application/json")
+    @POST("SP_Fav/Fg1e2GetAllFav")
+    fun insertaFavoritos(@Body fileData: Favoritos): Call<Boolean>
+
 }

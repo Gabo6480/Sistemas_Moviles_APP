@@ -66,7 +66,12 @@ data class Favoritos(
     val idPubli: Int,
     val activo: Int
 )
-
+{
+    //constructor para traer los favoritos de un usuario
+    constructor(idPubli: Int):this(-1,-1,idPubli,0)
+    //constructor para insertar un favorito
+    constructor(idUser: Int,idPubli: Int):this(-1,idUser,idPubli,0)
+}
 data class Categoria(
     val id: Int,
     val nombre: String

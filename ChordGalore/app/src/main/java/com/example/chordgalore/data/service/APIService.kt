@@ -1,16 +1,13 @@
 package com.example.chordgalore.data.service
 
 import android.widget.Toast
-import com.example.chordgalore.data.model.Usuarios
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import android.graphics.Bitmap
 import com.example.chordgalore.data.DataDbHelper
-import com.example.chordgalore.data.model.Categoria
-import com.example.chordgalore.data.model.Fotos
-import com.example.chordgalore.data.model.Publicacion
+import com.example.chordgalore.data.model.*
 import java.util.*
 
 class APIService {
@@ -287,7 +284,37 @@ class APIService {
             })
         }
 
+        //Funciones Favoritos
+        fun traerFavoritos(elId:Int,onResultCallback:(favs: List<Publicacion>?,t: Throwable?)->Unit){
+            val file =  Favoritos(elId)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result:Call<List<Publicacion>> = service.traeFavoritos(file)
 
+            result.enqueue(object: Callback<List<Publicacion>>{
+                override fun onFailure(call: Call<List<Publicacion>>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<List<Publicacion>>, response: Response<List<Publicacion>>) {
+                    onResultCallback(response.body(), null);
+                }
+            })
+        }
+
+        fun agregaFavorito(idPubli:Int,idUser:Int,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
+            val file =  Favoritos(idUser,idPubli)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result:Call<Boolean> = service.insertaFavoritos(file)
+
+            result.enqueue(object: Callback<Boolean>{
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    onResultCallback(response.body(), null);
+
+                }
+            })
+        }
     }
 
 }
