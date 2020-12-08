@@ -35,7 +35,7 @@ class SongActivity : AppCompatActivity() {
                         post_tittle.text = publi.titulo
                         post_subtitle.text = publi.nombre
                         post_genre.text = publi.generoN
-                        post_image.setImageBitmap(SaveSharedPreference.base64ToBitmap(publi.imagen.replace("data:image/png;base64,",""), this))
+                        post_image.setImageBitmap(SaveSharedPreference.base64ToBitmap(publi.imagen, this))
                         TextoCancion.text = publi.texto
 
                         if(publi.favorito == 1) {
@@ -50,7 +50,7 @@ class SongActivity : AppCompatActivity() {
                             fotos?.forEach {
                                 val newImage = ImageView(this)
                                 newImage.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT)
-                                newImage.setImageBitmap(SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), this))
+                                newImage.setImageBitmap(SaveSharedPreference.base64ToBitmap(it.imagen, this))
                                 newImage.scaleType = ImageView.ScaleType.CENTER_INSIDE
                                 newImage.adjustViewBounds = true
                                 newImage.setPadding(0,0,16,0)

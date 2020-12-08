@@ -115,7 +115,7 @@ class ListFragment(val query : Int) : Fragment() {
             -1 -> if(context?.let { ConectionUtility.isOnline(it) } == true){
                 APIService.traerPublicaciones { publis, t ->
                     publis?.forEach {
-                        listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                        listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
                     }
                     updateMoreItems()
                 }
@@ -131,7 +131,7 @@ class ListFragment(val query : Int) : Fragment() {
 
             -2 -> LoginRepository.instance()?.user?.userId?.let {APIService.traerFavoritos(it){ publis, t ->
                 publis?.forEach {
-                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
                 }
                 updateMoreItems()
             } }
@@ -139,7 +139,7 @@ class ListFragment(val query : Int) : Fragment() {
             -3 -> if (context?.let { ConectionUtility.isOnline(it) } == true){
                 LoginRepository.instance()?.user?.userId?.let { APIService.traerBorradorUser(it){ publis, t ->
                     publis?.forEach {
-                        listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                        listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
                     }
                     updateMoreItems()
                 }
@@ -152,7 +152,7 @@ class ListFragment(val query : Int) : Fragment() {
 
             else -> APIService.traerPublicacionesUser(query){ publis, t ->
                 publis?.forEach {
-                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
                 }
                 updateMoreItems()
             }

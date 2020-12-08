@@ -68,7 +68,7 @@ class NewSongActivity : AppCompatActivity() {
                         APIService.traerFotos(publi.id){ fotos, t ->
                             if (fotos != null) {
                                 fotos.forEach {
-                                    _currentBitmap.add(SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,", ""), this))
+                                    _currentBitmap.add(SaveSharedPreference.base64ToBitmap(it.imagen, this))
                                     _currentImages.add(createImageViewFromBitmap(_currentBitmap.last()));
                                 }
 

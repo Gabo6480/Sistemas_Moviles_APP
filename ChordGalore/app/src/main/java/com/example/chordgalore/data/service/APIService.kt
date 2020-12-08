@@ -32,7 +32,7 @@ class APIService {
             })
         }
         fun registroUsuario(nombre:String,apellidos:String,correo:String, passw: String,imagen: String,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
-            val file =  Usuarios(nombre,apellidos,correo,passw, "data:image/;base64,$imagen")
+            val file =  Usuarios(nombre,apellidos,correo,passw, imagen)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
             val result: Call<Boolean> = service.registrate(file)
 
@@ -48,7 +48,7 @@ class APIService {
         }
 
         fun updateUsuario(elId:Int,imagen: String,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
-            val file =  Usuarios(elId,"data:image/;base64,$imagen")
+            val file =  Usuarios(elId,imagen)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
             val result: Call<Boolean> = service.actualizate(file)
 
@@ -254,7 +254,7 @@ class APIService {
         }
 
         fun agregaFoto(imagen:String,idPubli:Int,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
-            val file =  Fotos(idPubli, "data:image/;base64,$imagen")
+            val file =  Fotos(idPubli, imagen)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
             val result:Call<Boolean> = service.insertaFoto(file)
 

@@ -164,7 +164,7 @@ abstract class ExampleActivity : AppCompatActivity(), View.OnClickListener  {
 
     private fun sendImage(){
 
-        val encodedString:String = "data:image/png;base64," + Base64.getEncoder().encodeToString(this.imgArray)
+        val encodedString:String = "" + Base64.getEncoder().encodeToString(this.imgArray)
 
         val file =  File(encodedString,0,"test")
 
@@ -193,7 +193,7 @@ abstract class ExampleActivity : AppCompatActivity(), View.OnClickListener  {
 
             override fun onResponse(call: Call<List<File>>, response: Response<List<File>>) {
                 val tempObjec =  response.body()
-                val strBase64:String =  tempObjec!![0].contenido.replace("data:image/png;base64,","")
+                val strBase64:String =  tempObjec!![0].contenido.replace(,"")
                 val imgByteArray =  Base64.getDecoder().decode(strBase64)
 
                 imageUI!!.setImageBitmap(ImageUtilities.getBitMapFromByteArray(imgByteArray))
