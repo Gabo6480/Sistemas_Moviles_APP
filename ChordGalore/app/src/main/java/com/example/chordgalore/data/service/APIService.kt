@@ -300,8 +300,8 @@ class APIService {
             })
         }
 
-        fun agregaFavorito(idPubli:Int,idUser:Int,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
-            val file =  Favoritos(idUser,idPubli)
+        fun agregaFavorito(idPubli:Int,idUser:Int,accion:Int,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
+            val file =  Favoritos(idUser,idPubli,accion)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
             val result:Call<Boolean> = service.insertaFavoritos(file)
 
