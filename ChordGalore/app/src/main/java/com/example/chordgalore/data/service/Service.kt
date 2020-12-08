@@ -22,6 +22,10 @@ interface Service {
     @Headers("Content-Type: application/json")
     @POST("SP_Usuario/Fg1e2DeleteUser")
     fun eliminate(@Body fileData: Usuarios): Call<Boolean>
+    @Headers("Content-Type: application/json")
+    @POST("SP_Usuario/Fg1e2UpdateUser")
+    fun actualizate(@Body fileData: Usuarios): Call<Boolean>
+
 
     //////////////////Publicacion
     @GET("SP_Publicacion/Fg1e2GetAllPosts")

@@ -47,6 +47,8 @@ data class Usuarios(
     constructor(id: Int,nombre: String,imagen: String):this(id,nombre,"","","",imagen,-1)
     //Constructor de Delete y obtener 1User
     constructor(id: Int):this(id,"","","","","",-1)
+    //Constructor de Update 1User
+    constructor(id: Int,imagen: String):this(id,"","","","",imagen,-1)
 }
 data class Fotos(
     val id: Int,

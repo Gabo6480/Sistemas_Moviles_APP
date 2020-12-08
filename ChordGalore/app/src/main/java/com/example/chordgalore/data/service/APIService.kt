@@ -47,8 +47,8 @@ class APIService {
             })
         }
 
-        fun updateUsuario(elId:Int,nombre:String,apellidos:String,correo:String, passw: String,imagen: String,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
-            val file =  Usuarios(elId,nombre,apellidos,correo,passw, "data:image/;base64,$imagen")
+        fun updateUsuario(elId:Int,imagen: String,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
+            val file =  Usuarios(elId,"data:image/;base64,$imagen")
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
             val result: Call<Boolean> = service.registrate(file)
 
