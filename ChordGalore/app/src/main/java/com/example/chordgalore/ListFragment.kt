@@ -1,28 +1,30 @@
 package com.example.chordgalore
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chordgalore.data.DataDbHelper
 import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.data.SaveSharedPreference
 import com.example.chordgalore.data.model.TileEntity
 import com.example.chordgalore.data.service.APIService
 import com.example.chordgalore.ui.content_view.ContentRecyclerAdapter
+import com.example.chordgalore.data.model.ConectionUtility
+import com.example.chordgalore.data.model.ImageUtilities
 import kotlinx.android.synthetic.main.fragment_list.*
+
 
 
 //Query va a ser utilizado para seleccionar que lista entre Home, Favorite y Downloads le vamos a mostrar
 //Se vale cambiar el tipo de dato si se considera más adecuado
 class ListFragment(val query : Int) : Fragment() {
-
+    var DBsqlite= LoginRepository.instance()?.context?.let { DataDbHelper(it) }
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ContentRecyclerAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -109,26 +111,39 @@ class ListFragment(val query : Int) : Fragment() {
 
     private fun getArrayItems(){
         when(query){
-            0 -> APIService.traerPublicaciones { publis, t ->
-                print("Done")
-                publis?.forEach {
-                    print("Load")
-                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+            0 -> if(context?.let { ConectionUtility.isOnline(it) } == true){
+                APIService.traerPublicaciones { publis, t ->
+                    publis?.forEach {
+                        listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                    }
                 }
-                updateMoreItems()
+            }else{
+                DBsqlite?.GetPublicaciones()?.forEach {
+                    it.Imagen?.let { it1 ->listItemsFull.add(TileEntity(it.PostID,
+                        ImageUtilities.getBitMapFromByteArray(it1),it.Titulo,it.Nameuser,it.CatName))}
+                }
             }
+
+
 
             1 -> {//Favoritos
                  }
 
-            2 -> LoginRepository.instance()?.user?.userId?.let { APIService.traerBorradorUser(it){ publis, t ->
-                publis?.forEach {
-                    print("Load")
-                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+            2 -> if (context?.let { ConectionUtility.isOnline(it) } == true){
+                LoginRepository.instance()?.user?.userId?.let { APIService.traerBorradorUser(it){ publis, t ->
+                    publis?.forEach {
+                        listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
+                    }
                 }
-                updateMoreItems()
-            } }
+                }
+            } else {
+                listItemsFull.add(TileEntity(-1, BitmapFactory.decodeResource(resources,R.drawable.default_image), "es necesaria una coneccion de internet para visualizar este contenido", "revise su coneccion de internet", "sin Internet"))
+            }
+
+
         }
+
+        updateMoreItems()
 
     }
 }
