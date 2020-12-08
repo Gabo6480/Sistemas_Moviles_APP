@@ -129,14 +129,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.nav_home -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(0)).addToBackStack("Home").commit()
+                .replace(R.id.fragment_container, ListFragment(-1)).addToBackStack("Home").commit()
 
             R.id.nav_favorite -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(1)).addToBackStack("Favorite")
+                .replace(R.id.fragment_container, ListFragment(-2)).addToBackStack("Favorite")
                 .commit()
 
             R.id.nav_draft -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(2)).addToBackStack("Draft")
+                .replace(R.id.fragment_container, ListFragment(-3)).addToBackStack("Draft")
                 .commit()
 
             R.id.nav_profile -> startActivity(Intent(this, ProfileActivity::class.java))
