@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.chordgalore.data.LoginRepository
 import com.example.chordgalore.data.SaveSharedPreference
@@ -38,11 +39,7 @@ class SongActivity : AppCompatActivity() {
                         TextoCancion.text = publi.texto
 
                         if(publi.favorito == 1) {
-                            buttonFav.background = ResourcesCompat.getDrawable(
-                                resources,
-                                R.drawable.gradient_login,
-                                null
-                            )
+                            buttonFav.setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent))
                             favorito = true
                         }
 
@@ -88,11 +85,7 @@ class SongActivity : AppCompatActivity() {
                 ){b, _ ->
                     if(b!!){
                         favorito = !favorito
-                        buttonFav.background = ResourcesCompat.getDrawable(
-                            resources,
-                            if(favorito) R.drawable.gradient_login else R.color.design_default_color_background,
-                            null
-                        )
+                        buttonFav.setBackgroundColor(ContextCompat.getColor(this, if(favorito) R.color.colorAccent else R.color.design_default_color_background))
                     }
                 }
             }
