@@ -1,16 +1,13 @@
 package com.example.chordgalore.data.service
 
 import android.widget.Toast
-import com.example.chordgalore.data.model.Usuarios
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import android.graphics.Bitmap
 import com.example.chordgalore.data.DataDbHelper
-import com.example.chordgalore.data.model.Categoria
-import com.example.chordgalore.data.model.Fotos
-import com.example.chordgalore.data.model.Publicacion
+import com.example.chordgalore.data.model.*
 import java.util.*
 
 class APIService {
@@ -128,6 +125,24 @@ class APIService {
             })
         }
 
+        fun traer1Publicacion(elIdPost:Int,elIdUser:Int,onResultCallback:(notice:Publicacion?, t: Throwable?)->Unit){
+            val file =  Publicacion(elIdPost,elIdUser)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result: Call<List<Publicacion>> = service.traePublicacion(file)
+
+            result.enqueue(object: Callback<List<Publicacion>>{
+                override fun onFailure(call: Call<List<Publicacion>>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<List<Publicacion>>, response: Response<List<Publicacion>>) {
+                    val arrayItems =  response.body()
+                    val notice =
+                        arrayItems?.get(0)?.let { Publicacion(it.id,it.nombre,it.imagen,it.titulo,it.idUser,it.activo,it.favorito,it.estado,it.genero,it.generoN,it.texto) };
+                    onResultCallback(  notice , null);
+                }
+            })
+        }
+
         fun traerPublicacionesCat(elId:Int,onResultCallback:(publis: List<Publicacion>?, t: Throwable?)->Unit){
             val file =  Publicacion(elId)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
@@ -209,7 +224,7 @@ class APIService {
         }
 
         //Funciones Fotos
-        fun traerFotos(idPubli: Int,onResultCallback:(publis: List<Fotos>?, t: Throwable?)->Unit){
+        fun traerFotos(idPubli: Int,onResultCallback:(fotitos: List<Fotos>?, t: Throwable?)->Unit){
             val file =  Fotos(idPubli)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
             val result: Call<List<Fotos>> = service.listFoto(file)
@@ -239,9 +254,9 @@ class APIService {
         }
 
         fun deleteFoto(elId:Int,onResultCallback:(respuesta:Boolean?,t: Throwable?)->Unit){
-            val file =  Publicacion(elId)
+            val file =  Fotos(elId)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
-            val result: Call<Boolean> = service.eliminaPost(file)
+            val result: Call<Boolean> = service.eliminaFoto(file)
 
             result.enqueue(object: Callback<Boolean>{
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {
@@ -265,6 +280,38 @@ class APIService {
                 }
                 override fun onResponse(call: Call<List<Categoria>>, response: Response<List<Categoria>>) {
                     onResultCallback(response.body(), null);
+                }
+            })
+        }
+
+        //Funciones Favoritos
+        fun traerFavoritos(elId:Int,onResultCallback:(favs: List<Publicacion>?,t: Throwable?)->Unit){
+            val file =  Favoritos(elId)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result:Call<List<Publicacion>> = service.traeFavoritos(file)
+
+            result.enqueue(object: Callback<List<Publicacion>>{
+                override fun onFailure(call: Call<List<Publicacion>>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<List<Publicacion>>, response: Response<List<Publicacion>>) {
+                    onResultCallback(response.body(), null);
+                }
+            })
+        }
+
+        fun agregaFavorito(idPubli:Int,idUser:Int,accion:Int,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
+            val file =  Favoritos(idUser,idPubli,accion)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result:Call<Boolean> = service.insertaFavoritos(file)
+
+            result.enqueue(object: Callback<Boolean>{
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    onResultCallback(response.body(), null);
+
                 }
             })
         }
