@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         LoginRepository.instance()?.context = applicationContext
 
         if(LoginRepository.instance()?.user == null) {

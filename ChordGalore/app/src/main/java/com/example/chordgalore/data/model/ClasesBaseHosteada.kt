@@ -64,8 +64,8 @@ data class Fotos(
 }
 data class Favoritos(
     val id: Int,
-    val idUser: Int,
-    val idPubli: Int,
+    val idUsuario: Int,
+    val idPublicacion: Int,
     val accion: Int
 )
 {
