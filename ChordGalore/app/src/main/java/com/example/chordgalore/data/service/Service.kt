@@ -75,7 +75,7 @@ interface Service {
     fun traeFavoritos(@Body fileData: Favoritos): Call<List<Publicacion>>
 
     @Headers("Content-Type: application/json")
-    @POST("SP_Fav/Fg1e2GetAllFav")
+    @POST("SP_Fav/Fg1e2AddFav")
     fun insertaFavoritos(@Body fileData: Favoritos): Call<Boolean>
 
 }
