@@ -50,7 +50,7 @@ class APIService {
         fun updateUsuario(elId:Int,imagen: String,onResultCallback:(status:Boolean?,t: Throwable?)->Unit){
             val file =  Usuarios(elId,"data:image/;base64,$imagen")
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
-            val result: Call<Boolean> = service.registrate(file)
+            val result: Call<Boolean> = service.actualizate(file)
 
             result.enqueue(object: Callback<Boolean>{
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {

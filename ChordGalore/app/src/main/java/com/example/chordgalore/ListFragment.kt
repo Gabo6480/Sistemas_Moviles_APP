@@ -116,12 +116,14 @@ class ListFragment(val query : Int) : Fragment() {
                     publis?.forEach {
                         listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
                     }
+                    updateMoreItems()
                 }
             }else{
                 DBsqlite?.GetPublicaciones()?.forEach {
                     it.Imagen?.let { it1 ->listItemsFull.add(TileEntity(it.PostID,
                         ImageUtilities.getBitMapFromByteArray(it1),it.Titulo,it.Nameuser,it.CatName))}
                 }
+                updateMoreItems()
             }
 
 
@@ -134,16 +136,16 @@ class ListFragment(val query : Int) : Fragment() {
                     publis?.forEach {
                         listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,",""), context), it.titulo, it.nombre, it.generoN))
                     }
+                    updateMoreItems()
                 }
                 }
             } else {
                 listItemsFull.add(TileEntity(-1, BitmapFactory.decodeResource(resources,R.drawable.default_image), "es necesaria una coneccion de internet para visualizar este contenido", "revise su coneccion de internet", "sin Internet"))
+                updateMoreItems()
             }
 
 
         }
-
-        updateMoreItems()
 
     }
 }

@@ -9,8 +9,11 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Toast
 import com.example.chordgalore.data.LoginRepository
+import com.example.chordgalore.data.SaveSharedPreference
 import com.example.chordgalore.data.model.LoggedInUser
+import com.example.chordgalore.data.service.APIService
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.custom_toolbar.*
 
@@ -40,7 +43,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     var newProfileBitmap : Bitmap? = null
-    var newPortadaBitmap : Bitmap? = null
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -63,6 +66,17 @@ class ProfileActivity : AppCompatActivity() {
             val newUser = user?.let { LoggedInUser(it.userId, it.displayName, newProfileBitmap ?: it.profileBitmap) }
             if (newUser != null) {
                 LoginRepository.instance()?.setLoggedInUser(newUser)
+                APIService.updateUsuario(newUser.userId,SaveSharedPreference.bitmapToBase64(
+                    newProfileBitmap!!
+                )){resultado,tirable->
+                    if(resultado!!){
+                        Toast.makeText(this@ProfileActivity,"Ok!",Toast.LENGTH_LONG).show()
+
+                    }else{
+                        Toast.makeText(this@ProfileActivity,"Hubo un error en el proceso",Toast.LENGTH_LONG).show()
+                    }
+                }
+
             }
         }
 
