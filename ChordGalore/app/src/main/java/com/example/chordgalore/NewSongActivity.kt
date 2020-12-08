@@ -24,6 +24,8 @@ class NewSongActivity : AppCompatActivity() {
     val RESULT_LOAD_IMAGE  = 1
     val arrayList = ArrayList<Categoria>()
     var added = false
+
+    var publID = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_song)
@@ -47,6 +49,39 @@ class NewSongActivity : AppCompatActivity() {
             newSongGenreSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arrayList)
         }
 
+        val extras = intent.extras
+        if (extras != null) {
+            publID = extras.getInt("SongID")
+
+            LoginRepository.instance()?.user?.userId?.let { uID ->
+                APIService.traer1Publicacion(publID,
+                    uID
+                ){ publi, t ->
+                    if(publi != null){
+                        newSongTitleEdit.setText(publi.titulo)
+                        newSongContentEdit.setText(publi.texto)
+                        arrayList.forEachIndexed { index, it ->
+                            if(it.id == publi.genero)
+                                newSongGenreSpinner.setSelection(index)
+                        }
+
+                        APIService.traerFotos(publi.id){ fotos, t ->
+                            if (fotos != null) {
+                                fotos.forEach {
+                                    _currentBitmap.add(SaveSharedPreference.base64ToBitmap(it.imagen.replace("data:image/png;base64,", ""), this))
+                                    _currentImages.add(createImageViewFromBitmap(_currentBitmap.last()));
+                                }
+
+                                APIService.deleteFoto(publi.id){_,_ ->
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         newSongPublicarBtn.setOnClickListener {
             val titulo = newSongTitleEdit.text.toString()
             var genero : Int = 0
@@ -60,7 +95,8 @@ class NewSongActivity : AppCompatActivity() {
             if(titulo.isNotEmpty() && genero != 0 && contenido.isNotEmpty() && _currentBitmap.size > 0) {
                 var problem = true
                 LoginRepository.instance()?.user?.userId?.let { it1 ->
-                    APIService.agregaPost(
+                    if(publID == 0)
+                        APIService.agregaPost(
                         titulo, genero, contenido, "Publicado",
                         it1
                     ) { pub, _ ->
@@ -86,6 +122,28 @@ class NewSongActivity : AppCompatActivity() {
                                     Toast.LENGTH_LONG
                                 ).show()
                                 problem = false
+                            }
+                        }
+                    }
+                    else{
+                        APIService.editaPost(publID, titulo, genero, contenido, "Publicado"){ b, _ ->
+                            if(b!!){
+                                _currentBitmap.forEach {
+                                    APIService.agregaFoto(
+                                        SaveSharedPreference.bitmapToBase64(it),
+                                        publID
+                                    ) { b, _ ->
+                                        if (!b!!) {
+                                            Toast.makeText(
+                                                applicationContext,
+                                                "Hubo un problema al subir la imagen",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                            problem = false
+                                        }
+                                    }
+
+                                }
                             }
                         }
                     }
@@ -154,6 +212,7 @@ class NewSongActivity : AppCompatActivity() {
             }
             val contenido = newSongContentEdit.text.toString()
 
+            if(publID == 0)
             LoginRepository.instance()?.user?.userId?.let { it1 ->
                 APIService.agregaPost(
                     titulo, genero, contenido, "Borrador",
@@ -172,6 +231,27 @@ class NewSongActivity : AppCompatActivity() {
                                         Toast.LENGTH_LONG
                                     ).show()
                             }
+                        }
+                    }
+                }
+            }
+            else{
+                APIService.editaPost(publID, titulo, genero, contenido, "Borrador"){ b, _ ->
+                    if(b!!){
+                        _currentBitmap.forEach {
+                            APIService.agregaFoto(
+                                SaveSharedPreference.bitmapToBase64(it),
+                                publID
+                            ) { b, _ ->
+                                if (!b!!) {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Hubo un problema al subir la imagen",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+
                         }
                     }
                 }

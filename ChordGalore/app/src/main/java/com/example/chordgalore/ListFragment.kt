@@ -74,7 +74,7 @@ class ListFragment(val query : Int) : Fragment() {
         adapter.setOnItemClickListener(object : ContentRecyclerAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 val item = listItems[position]
-                val intent = Intent(context, SongActivity::class.java)
+                val intent = Intent(context, if(query != 2) SongActivity::class.java else NewSongActivity::class.java)
                 intent.putExtra("SongID", item.id)
                 startActivity(intent)
             }
