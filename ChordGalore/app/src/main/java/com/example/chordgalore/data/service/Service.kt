@@ -39,6 +39,10 @@ interface Service {
     fun traePublicacion(@Body fileData: Publicacion): Call<List<Publicacion>>
 
     @Headers("Content-Type: application/json")
+    @POST("SP_Publicacion/Fg1e2GetPostUser")
+    fun traePublicacionUser(@Body fileData: Publicacion): Call<List<Publicacion>>
+
+    @Headers("Content-Type: application/json")
     @POST("SP_Publicacion/Fg1e2GetDraftPosts")
     fun listBorradorUser(@Body fileData: Publicacion): Call<List<Publicacion>>
 

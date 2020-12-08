@@ -158,6 +158,21 @@ class APIService {
             })
         }
 
+        fun traerPublicacionesUser(elId:Int,onResultCallback:(publis: List<Publicacion>?, t: Throwable?)->Unit){
+            val file =  Publicacion(elId)
+            val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
+            val result: Call<List<Publicacion>> = service.traePublicacionUser(file)
+
+            result.enqueue(object: Callback<List<Publicacion>>{
+                override fun onFailure(call: Call<List<Publicacion>>, t: Throwable) {
+                    onResultCallback(null, t)
+                }
+                override fun onResponse(call: Call<List<Publicacion>>, response: Response<List<Publicacion>>) {
+                    onResultCallback(  response.body() , null);
+                }
+            })
+        }
+
         fun traerBorradorUser(elId:Int,onResultCallback:(borris:List<Publicacion>?,t: Throwable?)->Unit){
             val file =  Publicacion(elId)
             val service: Service =  RestEngine.getRestEngine().create(Service::class.java)
