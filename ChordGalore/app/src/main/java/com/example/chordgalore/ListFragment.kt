@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 
 //Query va a ser utilizado para seleccionar que lista entre Home, Favorite y Downloads le vamos a mostrar
 //Se vale cambiar el tipo de dato si se considera más adecuado
-class ListFragment(val query : Int) : Fragment() {
+class ListFragment(val query : Int, val id : Int?) : Fragment() {
     var DBsqlite= LoginRepository.instance()?.context?.let { DataDbHelper(it) }
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ContentRecyclerAdapter
@@ -111,8 +112,9 @@ class ListFragment(val query : Int) : Fragment() {
     }
 
     private fun getArrayItems(){
+
         when(query){
-            -1 -> if(context?.let { ConectionUtility.isOnline(it) } == true){
+            0 -> if(context?.let { ConectionUtility.isOnline(it) } == true){
                 APIService.traerPublicaciones { publis, t ->
                     publis?.forEach {
                         listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
@@ -129,14 +131,14 @@ class ListFragment(val query : Int) : Fragment() {
 
 
 
-            -2 -> LoginRepository.instance()?.user?.userId?.let {APIService.traerFavoritos(it){ publis, t ->
+            1 -> LoginRepository.instance()?.user?.userId?.let {APIService.traerFavoritos(it){ publis, t ->
                 publis?.forEach {
                     listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
                 }
                 updateMoreItems()
             } }
 
-            -3 -> if (context?.let { ConectionUtility.isOnline(it) } == true){
+            2 -> if (context?.let { ConectionUtility.isOnline(it) } == true){
                 LoginRepository.instance()?.user?.userId?.let { APIService.traerBorradorUser(it){ publis, t ->
                     publis?.forEach {
                         listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
@@ -150,11 +152,13 @@ class ListFragment(val query : Int) : Fragment() {
                 updateMoreItems()
             }
 
-            else -> APIService.traerPublicacionesUser(query){ publis, t ->
-                publis?.forEach {
-                    listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
+            3 -> id?.let {
+                APIService.traerPublicacionesUser(it){ publis, t ->
+                    publis?.forEach {
+                        listItemsFull.add(TileEntity(it.id, SaveSharedPreference.base64ToBitmap(it.imagen, context), it.titulo, it.nombre, it.generoN))
+                    }
+                    updateMoreItems()
                 }
-                updateMoreItems()
             }
 
         }

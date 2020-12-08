@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         //Abrimos la pantalla de inicio como default en caso de que no haya ningun estado guardado
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(0)).commit()
+                .replace(R.id.fragment_container, ListFragment(0, null)).commit()
             nav_view.setCheckedItem(R.id.nav_home)
         }
 
@@ -129,14 +129,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
 
             R.id.nav_home -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(-1)).addToBackStack("Home").commit()
+                .replace(R.id.fragment_container, ListFragment(0, null)).addToBackStack("Home").commit()
 
             R.id.nav_favorite -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(-2)).addToBackStack("Favorite")
+                .replace(R.id.fragment_container, ListFragment(1, null)).addToBackStack("Favorite")
                 .commit()
 
             R.id.nav_draft -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ListFragment(-3)).addToBackStack("Draft")
+                .replace(R.id.fragment_container, ListFragment(2, null)).addToBackStack("Draft")
                 .commit()
 
             R.id.nav_profile -> startActivity(Intent(this, ProfileActivity::class.java))

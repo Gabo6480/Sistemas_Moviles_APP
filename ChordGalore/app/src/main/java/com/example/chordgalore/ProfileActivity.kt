@@ -27,7 +27,7 @@ class ProfileActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true); //Activamos la flechita de regreso
 
-        LoginRepository.instance()?.user?.userId?.let { ListFragment(it) }?.let {
+        LoginRepository.instance()?.user?.userId?.let { ListFragment(3, it) }?.let {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container,
                     it
