@@ -70,7 +70,7 @@ data class Favoritos(
 )
 {
     //constructor para traer los favoritos de un usuario
-    constructor(idPubli: Int):this(-1,-1,idPubli,0)
+    constructor(idUsuario: Int):this(-1,idUsuario,-1,2)
     //constructor para insertar un favorito
     constructor(idUser: Int,idPubli: Int,accion: Int):this(-1,idUser,idPubli,accion)
 }
